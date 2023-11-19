@@ -23,7 +23,7 @@ class ImageMetaData:
             self.exif_attributes = []
 
 
-    # Accessing the attributes
+    # Getter
     def get_basic_properties(self):
         return self.attr_basic_properties
     
@@ -33,7 +33,7 @@ class ImageMetaData:
     def get_exif_attributes(self):
         return self.exif_attributes
     
-    
+
 
     # Helping methods
     def __get_basic_properties(self):
