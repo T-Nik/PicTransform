@@ -8,9 +8,9 @@ logging.basicConfig(format='%(asctime)s %(message)s')
 
 def get_basic_properties(relative_image_path):
     logging.info("In function get_imagesize")
+    logging.info(f"get_basic_properties: relative_image_path: {relative_image_path}")
     try:
         with Image.open(relative_image_path) as image:
-            logging.info(f"get_basic_properties: relative_image_path: {relative_image_path}")
             return image.format, image.size, image.mode
     except FileNotFoundError:
         logging.error(f"get_basic_properties: Datei nicht gefunden - {relative_image_path}")
