@@ -11,7 +11,9 @@ def get_basic_properties(relative_image_path):
     logging.info(f"get_basic_properties: relative_image_path: {relative_image_path}")
     try:
         with Image.open(relative_image_path) as image:
-            return image.format, image.size, image.mode
+            get_basic_properties = (image.format, image.size, image.mode)
+            logging.info(f"get_basic_properties: get_basic_properties: {get_basic_properties}")
+            return get_basic_properties
     except FileNotFoundError:
         logging.error(f"get_basic_properties: Datei nicht gefunden - {relative_image_path}")
         raise FileNotFoundError(f"Datei nicht gefunden - {relative_image_path}")
