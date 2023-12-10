@@ -1,9 +1,22 @@
-# Beispiel
+# Autor: <your name>
+'''
+    Beschreibung:
+'''
 
+from PIL import Image
+
+
+# Sry musste es schonmal testen :D
+# TODO: Wenn das Bild nicht um 90° oder 180° gedreht wird, verändert sich die Auflösung, da könntest du nochmal schauen, ob es dafür einen fix gibt mit img.show() kannst du dir das Bild vorher ausgeben lassen
 def drehen(image_path, degrees):
-    print("drehen um: " + str(degrees) + " Grad")
+    
+    img = Image.open(image_path)
+    rotated_img = img.rotate(degrees, expand=True) # expand=True verhindert das Abschneiden des Bildes und verändert die Größe des Bildes
 
-    # neu gedrehte Datei erstellen
-    cake.png -> cake_modified.png
+    # Bild anzeigen lassen
+    # rotated_img.show()
 
-    return cake_modified.png
+    # Speichern des Bildes
+    rotated_img.save(image_path)
+
+    return image_path + " gedreht um " + str(degrees) + " Grad°"

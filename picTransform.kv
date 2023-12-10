@@ -15,6 +15,7 @@
             on_release: app.open_fileChooser()
         Button:
             text: 'Export'
+            on_release: app.export_image()
             
             
     # Middle Area
@@ -35,6 +36,7 @@
                 text: 'Schärfen'
             Button:
                 text: 'Drehen°'
+                on_release: app.show_rotate_controls()
             Button:
                 text: 'FarbFilter'
             Button:
@@ -86,5 +88,5 @@
         id: aktions_leiste
         size_hint_y: 0.2
         Label:
+            id: aktions_leiste_label
             text: 'Aktionsleiste mit Slidern und Buttons für die Effekte'
-            # Hier können später Slider und Buttons hinzugefügt werden

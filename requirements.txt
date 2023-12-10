@@ -12,3 +12,4 @@ pypiwin32==223
 pywin32==306
 requests==2.31.0
 urllib3==2.1.0
+Pillow==10.1.0
