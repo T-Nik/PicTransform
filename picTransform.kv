@@ -47,14 +47,20 @@
             # Grauer Hintergrund
             canvas.before:
                 Color:
-                    rgba: 0.5, 0.5, 0.7, 1
+                    rgba: 0, 0, 0, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
-            size: image_area.size  # Stellen Sie sicher, dass das FloatLayout die gesamte ImageArea ausfüllt
-            pos: image_area.pos
+            canvas.after:
+                Color:
+                    rgba: 0.5, 0.5, 1, 0.5  # Weiße Farbe für die Umrandung
+                Line:
+                    rectangle: self.x, self.y, self.width, self.height
+                    width: 1.5
             Image:
                 id: image_widget
+                allow_stretch: True
+                keep_ratio: True
                 source: 'icons/Import.png'
                 size_hint: 0.5, 0.5  # 50% der Größe des FloatLayouts
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}  # Zentriert im FloatLayout

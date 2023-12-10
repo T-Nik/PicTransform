@@ -51,8 +51,8 @@ class Controller(BoxLayout):
 class PicTransform(App):
 
     def build(self):
-        self.image_area = None # Wird erst nach dem Fertig-Bauen zugewiesen, weil das initialisieren der ids in der.kv erst nach dem build fertig ist
-        return Controller() # Root-Widget
+        root = Controller() # Root-Widget
+        return root
 
     # Wird autom. aufgerufen nachdem das Fenster fertig gebaut wurde
     def on_start(self):
@@ -63,8 +63,9 @@ class PicTransform(App):
         # filter macht es möglich nur bestimmte Dateitypen zu wählen, alle anderne werden ausgeblendet
         filechooser = FileChooserIconView(filters=['*.png', '*.jpg', '*.jpeg'])
         filechooser.bind(selection=self.selected) # bindet die Funktion select an die Auswahl des FileChoosers
-        self.popup = Popup(title="Select an image", content=filechooser,
-                      size_hint=(0.7, 0.7))
+        self.popup = Popup(title="Select an image", 
+                        content=filechooser,
+                        size_hint=(0.7, 0.7))
         self.popup.open()
 
     # Funktion zum Speichern des Bildes in images und Anzeigen des Bildes in ImageArea
@@ -77,6 +78,10 @@ class PicTransform(App):
             # Kopieren des Bildes in den Ordner images
             destination_path = "images/" + os.path.basename(selected_path)
             copy_file(selected_path, destination_path)
+
+            # Anzeigen des Bildes in ImageArea, durch anpassen des source-Attributs des image_widgets
+            self.root.ids.image_widget.source = destination_path
+            self.root.ids.image_widget.size_hint = (1, 1)
 
             self.popup.dismiss() # schließt das FileChooser-Popup
 
