@@ -1,0 +1,84 @@
+<Controller>:
+    spacing: 10
+    padding: 10
+    orientation: 'vertical'
+
+    # Datei Leiste
+    BoxLayout:
+        id: datei_leiste
+        size_hint_y: 0.1
+        # Alle Elemente soll einen Margin von 10px kriegen
+        spacing: 10
+        Button:
+            id: import_button
+            text: 'Import'
+            on_release: app.open_fileChooser()
+        Button:
+            text: 'Speichern'
+            
+            
+    # Middle Area
+    BoxLayout:
+        id: middle_area
+        spacing: 10
+        orientation: 'horizontal'
+
+        # Left Panel
+        BoxLayout:
+            id: left_panel
+            spacing: 10
+            orientation: 'vertical'
+            size_hint_x: 0.1
+            Button:
+                text: 'Sättigung'
+            Button:
+                text: 'Schärfen'
+            Button:
+                text: 'Drehen°'
+            Button:
+                text: 'FarbFilter'
+            Button:
+                text: 'Invertieren'
+
+        # Image Area
+        FloatLayout:
+            id: image_area
+            size_hint_x: 0.8
+            # Grauer Hintergrund
+            canvas.before:
+                Color:
+                    rgba: 0.5, 0.5, 0.7, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size: image_area.size  # Stellen Sie sicher, dass das FloatLayout die gesamte ImageArea ausfüllt
+            pos: image_area.pos
+            Image:
+                id: image_widget
+                source: 'icons/Import.png'
+                size_hint: 0.5, 0.5  # 50% der Größe des FloatLayouts
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}  # Zentriert im FloatLayout
+           
+        # Right Panel
+        BoxLayout:
+            id: right_panel
+            spacing: 10
+            orientation: 'vertical'
+            size_hint_x: 0.1
+            Button:
+                text: 'Meta Daten'
+            Button:
+                text: 'Objekt Erkennung'
+            Button:
+                text: 'Auflösung'
+            Button:
+                text: 'Ausschneiden'
+
+
+    # Aktionsleiste
+    BoxLayout:
+        id: aktions_leiste
+        size_hint_y: 0.2
+        Label:
+            text: 'Aktionsleiste mit Slidern und Buttons für die Effekte'
+            # Hier können später Slider und Buttons hinzugefügt werden
