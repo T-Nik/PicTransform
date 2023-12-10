@@ -4,9 +4,9 @@ from PIL import Image
 from PIL import ImageFilter
 from speichern import bildspeichern
 
-im = Image.open(r"G:\Documents\Nextcloud_23\WiSe 2023\Programmierung für KI\Visual Studio Code\Projektgruppe\beispielbild.jpeg")
+im = Image.open("../images/cake.jpg")
 
-def unschaerfe_radius (bild, radius):
+def unschaerfe_radius (im, radius):
     if type(radius) == int or type(radius)== float:
         im.show()
         im2 = im.filter(ImageFilter.BoxBlur(radius))
