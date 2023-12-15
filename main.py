@@ -125,7 +125,32 @@ class PicTransform(App):
         # Entfernt alle Widgets aus der aktions_leiste
         self.root.ids.aktions_leiste.clear_widgets
 
+     def show_filter_controls(self):
+        self.clear_action_bar()
 
+        # Altes label entfernen
+        self.root.ids.aktions_leiste.remove_widget(self.root.ids.aktions_leiste_label)
+        # Neues label hinzufügen
+        self.filter_label = Label(text=str(Filter_Presets.current_filter))
+        self.root.ids.aktions_leiste.add_widget(self.filter_label)
+        # Slider hinzufügen
+        self.filter_slider = Slider(min=0, max=int(len(Filter_Presets.filter_dict.values())) - 1, value=0, step=1)
+        self.filter_slider.bind(value=lambda instance, value: setattr(self.filter_label, 'text', f'{list(Filter_Presets.filter_dict.values())[int(value)]}'))
+        self.root.ids.aktions_leiste.add_widget(self.filter_slider)
+
+        # Button hinzufügen
+        self.preview_button = Button(text='Vorschau', on_release=self.apply_filter)
+        self.apply_button = Button(text='Anwenden', on_release=self.apply_filter)
+        self.root.ids.aktions_leiste.add_widget(self.preview_button)
+        self.root.ids.aktions_leiste.add_widget(self.apply_button)
+
+    def preview_filter(self, callBackWidget):
+        Filter_Presets.filter_dict[self.filter_label.text].apply_config(self.actualImagePath, preview=True)
+
+    def apply_filter(self, callBackWidget):
+        Filter_Presets.filter_dict[self.filter_label.text].apply_config(self.actualImagePath)
+        self.root.ids.image_widget.source = self.actualImagePath
+        self.root.ids.image_widget.reload()
 
     # "Drehen°"-Button
     def show_rotate_controls(self):
