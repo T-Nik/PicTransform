@@ -47,6 +47,11 @@ def weichzeichnen (image_path, radius):
             blured_img.save("./images/blured_img.png")
             newimage_path="./images/blured_img.png"
 
+        #Bei ".jpeg" wird das manipulierte Bild entsprechend als ".jpeg" abgespeichert
+        elif (dateiendung == ".jpeg"):
+            blured_img.save("./images/blured_img.jpeg")
+            newimage_path="./images/blured_img.jpeg"
+
         #Gibt den Dateipfad des manipulierten Bildes aus    
         return newimage_path      
     else:
