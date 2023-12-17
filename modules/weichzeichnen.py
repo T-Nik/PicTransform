@@ -1,4 +1,4 @@
-#Unschärfe
+#Weichzeichnen
 '''
 Beschreibung der Funktion:
 Mit dieser Funktion kann ein Bild mit einer Unschärfe versehen werden.
@@ -16,7 +16,7 @@ from PIL import ImageFilter
 import os
 
 # Der Funktion werden ein Dateipfad zum Bild sowie der gewünschte Radius übergeben.
-def unschaerfe_radius (image_path, radius):
+def weichzeichnen (image_path, radius):
 
     #Prüfung, ob der übergebene Radius dem Typ int oder float entspricht, wenn nicht, wird die Funktion beendet.
     if type(radius) == int or type(radius)== float:
