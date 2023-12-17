@@ -1,6 +1,6 @@
 # Autor: <your name>
 '''
-    Beschreibung:  Die Funktion "drehen" in dem gegebenen code hat die Aufgabe, ein Bild zu öffnen, es um einen bestimmten Grad zu drehen, und je nach Rotationswinkel das Bild in die Originaldimensionen zu resize, um die ursprüngliche Auflösung beizubehalten.
+    Beschreibung:  Die Funktion "drehen" in dem gegebenen code hat die Aufgabe, ein Bild zu öffnen, es um einen bestimmten Grad zu drehen, und je nach Rotationswinkel das Bild in die Originaldimensionen zu ändern, um die ursprüngliche Auflösung beizubehalten.
 '''
 
 from PIL import Image
