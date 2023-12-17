@@ -3,12 +3,11 @@
 Beschreibung der Funktion:
 Mit dieser Funktion kann ein Bild durch einen Weichzeichner mit einer Unschärfe versehen werden.
 In der Funktion selbst wird auf den linearen Filter "BloxBlur" zurückgegriffen.
-Dieser setzt den Wert jedes Pixels auf den Dur
 
 Vergleiche folgende Quellen anhand derer der Code implementiert wurde:
-    https://pillow.readthedocs.io/en/stable/reference/Image.html
-    https://pillow.readthedocs.io/en/stable/reference/ImageFilter.html
-
+    Modul Image: https://pillow.readthedocs.io/en/stable/reference/Image.html
+    Modul ImageFilter: https://pillow.readthedocs.io/en/stable/reference/ImageFilter.html
+    Modul OS: https://docs.python.org/3/library/os.path.html
 '''
 
 #Import des Image-Moduls der Bibliothek Pillow
@@ -43,7 +42,7 @@ def weichzeichnen (image_path, radius):
         print (dateiendung)
 
         #Bedingung prüft, welche Dateiendung in der Variablen "Dateiendung" gespeichert ist.
-        #Bei ".jpg" wird das manipulierte Bild entsprechend als ".jpg" abgespeichert
+        #Bei Dateiendung ".jpg" wird das manipulierte Bild entsprechend als ".jpg" abgespeichert
         if (dateiendung == ".jpg"):
 
             #Speichern des manipulierten Bildes im Ordner "Images" mit dem Dateinamen "Blured_img" und der Dateiendung ".jpg"
@@ -53,7 +52,7 @@ def weichzeichnen (image_path, radius):
             newimage_path= "./images/blured_img.jpg"
             
         
-        #Bei ".png" wird das manipulierte Bild entsprechend als ".png" abgespeichert
+        #Bei Dateiendung ".png" wird das manipulierte Bild entsprechend als ".png" abgespeichert
         elif (dateiendung == ".png"):
 
             #Speichern des manipulierten Bildes im Ordner "Images" mit dem Dateinamen "Blured_img" und der Dateiendung ".png"
@@ -62,7 +61,7 @@ def weichzeichnen (image_path, radius):
             #Speichern des Dateipfades des manipulierten Bildes in die Variable "newimage_path"
             newimage_path="./images/blured_img.png"
 
-        #Bei ".jpeg" wird das manipulierte Bild entsprechend als ".jpeg" abgespeichert
+        #Bei Dateiendung ".jpeg" wird das manipulierte Bild entsprechend als ".jpeg" abgespeichert
         elif (dateiendung == ".jpeg"):
             
             #Speichern des manipulierten Bildes im Ordner "Images" mit dem Dateinamen "Blured_img" und der Dateiendung ".jpeg"
