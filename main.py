@@ -20,7 +20,10 @@ from kivy.uix.label import Label
 
 
 # Imports eigener Module
+# "Drehen°"-Funktion von "Kevin"
 from modules.drehen import drehen
+
+# "Filter"-Funktionen von Johanna
 import modules.filter as filter
 from modules.filter import Filter_Presets
 
@@ -125,8 +128,10 @@ class PicTransform(App):
 
     def clear_action_bar(self):
         # Entfernt alle Widgets aus der aktions_leiste
-        self.root.ids.aktions_leiste.clear_widgets
+        self.root.ids.aktions_leiste.clear_widgets()
 
+
+#region "Filter"
     def show_filter_controls(self):
         self.clear_action_bar()
 
@@ -141,20 +146,22 @@ class PicTransform(App):
         self.root.ids.aktions_leiste.add_widget(self.filter_slider)
 
         # Button hinzufügen
-        self.preview_button = Button(text='Vorschau', on_release=self.apply_filter)
-        self.apply_button = Button(text='Anwenden', on_release=self.apply_filter)
+        self.preview_button = Button(text='Vorschau', on_release=self.preview_filter)
         self.root.ids.aktions_leiste.add_widget(self.preview_button)
+        self.apply_button = Button(text='Anwenden', on_release=self.apply_filter)
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
 
     def preview_filter(self, callBackWidget):
         Filter_Presets.filter_dict[self.filter_label.text].apply_config(self.actualImagePath, preview=True)
 
     def apply_filter(self, callBackWidget):
-        Filter_Presets.filter_dict[self.filter_label.text].apply_config(self.actualImagePath)
+        Filter_Presets.filter_dict[self.filter_label.text].apply_config(self.actualImagePath, preview=False)
         self.root.ids.image_widget.source = self.actualImagePath
         self.root.ids.image_widget.reload()
+#endregion "Filter"
 
-    # "Drehen°"-Button
+
+#region "Drehen°"
     def show_rotate_controls(self):
         self.clear_action_bar()
 
@@ -183,6 +190,7 @@ class PicTransform(App):
 
         self.root.ids.image_widget.source = self.actualImagePath
         self.root.ids.image_widget.reload()
+#endregion "Drehen°"
 
 
 if __name__ == '__main__':
