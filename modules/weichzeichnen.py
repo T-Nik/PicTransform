@@ -57,4 +57,4 @@ def weichzeichnen (image_path, radius):
     else:
         print("Bitte wähle als Radius eine Zahl.")
     
-unschaerfe_radius ("./images/cake.jpg", 10);
+weichzeichnen ("./images/cake.jpg", 10);
