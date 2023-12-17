@@ -3,6 +3,7 @@
 Beschreibung der Funktion:
 Mit dieser Funktion kann ein Bild mit einer Unschärfe versehen werden.
 In der Funktion selbst wird auf den linearen Filter "BloxBlur" zurückgegriffen.
+Dieser setzt den Wert jedes Pixels 
 '''
 
 #Import des Image Moduls der Bibliothek Pillow
@@ -51,4 +52,4 @@ def unschaerfe_radius (image_path, radius):
     else:
         print("Bitte wähle als Radius eine Zahl.")
     
-unschaerfe_radius ("./images/cake.png", 10);
+unschaerfe_radius ("./images/cake.jpg", 10);
