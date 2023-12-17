@@ -21,6 +21,8 @@ from kivy.uix.label import Label
 
 # Imports eigener Module
 from modules.drehen import drehen
+import modules.filter as filter
+from modules.filter import Filter_Presets
 
 #endregion Imports
 
@@ -125,7 +127,7 @@ class PicTransform(App):
         # Entfernt alle Widgets aus der aktions_leiste
         self.root.ids.aktions_leiste.clear_widgets
 
-     def show_filter_controls(self):
+    def show_filter_controls(self):
         self.clear_action_bar()
 
         # Altes label entfernen
