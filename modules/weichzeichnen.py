@@ -3,7 +3,7 @@
 Beschreibung der Funktion:
 Mit dieser Funktion kann ein Bild mit einer Unschärfe versehen werden.
 In der Funktion selbst wird auf den linearen Filter "BloxBlur" zurückgegriffen.
-Dieser setzt den Wert jedes Pixels 
+Dieser setzt den Wert jedes Pixels auf den Dur
 '''
 
 #Import des Image Moduls der Bibliothek Pillow
