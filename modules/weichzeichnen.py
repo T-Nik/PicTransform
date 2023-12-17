@@ -1,18 +1,23 @@
 #Weichzeichnen
 '''
 Beschreibung der Funktion:
-Mit dieser Funktion kann ein Bild mit einer Unschärfe versehen werden.
+Mit dieser Funktion kann ein Bild durch einen Weichzeichner mit einer Unschärfe versehen werden.
 In der Funktion selbst wird auf den linearen Filter "BloxBlur" zurückgegriffen.
 Dieser setzt den Wert jedes Pixels auf den Dur
+
+Vergleiche folgende Quellen anhand derer der Code implementiert wurde:
+    https://pillow.readthedocs.io/en/stable/reference/Image.html
+    https://pillow.readthedocs.io/en/stable/reference/ImageFilter.html
+
 '''
 
-#Import des Image Moduls der Bibliothek Pillow
+#Import des Image-Moduls der Bibliothek Pillow
 from PIL import Image
 
-#Import des ImageFilter Moduls der Bibliothek Pillow
+#Import des ImageFilter-Moduls der Bibliothek Pillow
 from PIL import ImageFilter
 
-
+#Import des OS-Moduls
 import os
 
 # Der Funktion werden ein Dateipfad zum Bild sowie der gewünschte Radius übergeben.
@@ -34,27 +39,42 @@ def weichzeichnen (image_path, radius):
         blured_img.show()
 
         #In die Variable Dateiendung, wird die Dateiendung des in die Funktion importierten Bildes gespeichert.
-        dateiendung = os.path.splitext(image_path)[1]
+        dateifpad, dateiendung = os.path.splitext(image_path)
+        print (dateiendung)
 
         #Bedingung prüft, welche Dateiendung in der Variablen "Dateiendung" gespeichert ist.
         #Bei ".jpg" wird das manipulierte Bild entsprechend als ".jpg" abgespeichert
         if (dateiendung == ".jpg"):
+
+            #Speichern des manipulierten Bildes im Ordner "Images" mit dem Dateinamen "Blured_img" und der Dateiendung ".jpg"
             blured_img.save("./images/blured_img.jpg")
+
+            #Speichern des Dateipfades des manipulierten Bildes in die Variable "newimage_path"
             newimage_path= "./images/blured_img.jpg"
+            
         
         #Bei ".png" wird das manipulierte Bild entsprechend als ".png" abgespeichert
         elif (dateiendung == ".png"):
+
+            #Speichern des manipulierten Bildes im Ordner "Images" mit dem Dateinamen "Blured_img" und der Dateiendung ".png"
             blured_img.save("./images/blured_img.png")
+            
+            #Speichern des Dateipfades des manipulierten Bildes in die Variable "newimage_path"
             newimage_path="./images/blured_img.png"
 
         #Bei ".jpeg" wird das manipulierte Bild entsprechend als ".jpeg" abgespeichert
         elif (dateiendung == ".jpeg"):
+            
+            #Speichern des manipulierten Bildes im Ordner "Images" mit dem Dateinamen "Blured_img" und der Dateiendung ".jpeg"
             blured_img.save("./images/blured_img.jpeg")
-            newimage_path="./images/blured_img.jpeg"
+
+            #Speichern des Dateipfades des manipulierten Bildes in die Variable "newimage_path"
+            newimage_path= "./images/blured_img.jpeg"
 
         #Gibt den Dateipfad des manipulierten Bildes aus    
         return newimage_path      
     else:
         print("Bitte wähle als Radius eine Zahl.")
     
+#Testaufruf der Funktion
 weichzeichnen ("./images/cake.jpg", 10);
