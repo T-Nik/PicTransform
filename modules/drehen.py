@@ -12,7 +12,8 @@ def drehen(image_path, degrees):
     
     img = Image.open(image_path)
     if degrees == 90 or degrees == 180:
-        rotated_img = img.rotate(degrees, expand=True) # expand=True verhindert das Abschneiden des Bildes und verändert die Größe des Bildes
+        original_dimensions = img.size
+        resized_img = rotated_img.resize(original_dimensions, Image.ANTIALIAS)
     else:
         rotated_img = img.rotate(degrees)
     
