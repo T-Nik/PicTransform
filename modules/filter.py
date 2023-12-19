@@ -53,9 +53,7 @@ class Filter:
 
             return Image.merge("RGB", rgb_channels)
 
-        def adjust_color_temperature(image,
-                                     r_change=20,
-                                     b_change=-20):
+        def adjust_color_temperature(image, r_change=20, b_change=-20):
 
             r, _, b = image.split()
 
@@ -107,6 +105,3 @@ class Filter_Presets:
         }
 
     current_filter = filter_dict["Original"]
-
-
-

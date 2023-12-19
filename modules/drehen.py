@@ -1,6 +1,6 @@
 # Autor: <your name>
 '''
-    Beschreibung:
+    Beschreibung:  Die Funktion "drehen" in dem gegebenen code hat die Aufgabe, ein Bild zu öffnen, es um einen bestimmten Grad zu drehen, und je nach Rotationswinkel das Bild in die Originaldimensionen zu ändern, um die ursprüngliche Auflösung beizubehalten.
 '''
 
 from PIL import Image
@@ -11,10 +11,17 @@ from PIL import Image
 def drehen(image_path, degrees):
     
     img = Image.open(image_path)
-    rotated_img = img.rotate(degrees, expand=True) # expand=True verhindert das Abschneiden des Bildes und verändert die Größe des Bildes
+    if degrees == 90 or degrees == 180:
+        original_dimensions = img.size
+        resized_img = rotated_img.resize(original_dimensions, Image.ANTIALIAS)
+    else:
+        rotated_img = img.rotate(degrees)
+    
+    original_dimensions = img.size
+    resized_img = rotated_img.resize(original_dimensions, Image.ANTIALIAS)
 
     # Bild anzeigen lassen
-    # rotated_img.show()
+    rotated_img.show()
 
     # Speichern des Bildes
     rotated_img.save(image_path)
