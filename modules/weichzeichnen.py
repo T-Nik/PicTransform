@@ -70,4 +70,4 @@ def weichzeichnen (image_path, radius):
     return newimage_path      
     
 #Testaufruf der Funktion
-weichzeichnen ("./images/cake.jpg", 100);
+weichzeichnen ("./images/cake.jpg", 100)

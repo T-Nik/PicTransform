@@ -177,18 +177,28 @@ class PicTransform(App):
         self.rotate_slider.bind(value=lambda instance, value: setattr(self.degree_label, 'text', f'{int(value)}°'))
         self.root.ids.aktions_leiste.add_widget(self.rotate_slider)
 
-        # Button hinzufügen
+        # "Vorschau" Button hinzufügen
+        self.preview_button = Button(text='Vorschau', on_release=self.preview_rotate)
+        self.root.ids.aktions_leiste.add_widget(self.preview_button)
+
+        # "Anwenden" Button hinzufügen
         self.apply_button = Button(text='Anwenden', on_release=self.apply_rotate)
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
+        
+
+    def preview_rotate(self, callBackWidget):
+        degrees = self.rotate_slider.value
+        # Nachkommastellen enfternen
+        degrees = int(degrees)
+        # von ihr aus modules/drehen.py aufrufen
+        print(drehen(self.actualImagePath, degrees, preview=True))
 
     def apply_rotate(self, callBackWidget):
         degrees = self.rotate_slider.value
         # Nachkommastellen enfternen
         degrees = int(degrees)
-
         # von ihr aus modules/drehen.py aufrufen
-        print(drehen(self.actualImagePath, degrees))
-
+        print(drehen(self.actualImagePath, degrees, preview=False))
         self.root.ids.image_widget.source = self.actualImagePath
         self.root.ids.image_widget.reload()
 #endregion "Drehen°"

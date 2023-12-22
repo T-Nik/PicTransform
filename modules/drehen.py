@@ -5,25 +5,27 @@
 
 from PIL import Image
 
+def drehen(image_path, degrees, preview=True):
+    
+    try:
+        img = Image.open(image_path)
+        rotated_img = img.rotate(degrees, expand=False)
+    except:
+        print("Fehler beim Öffnen des Bildes")
+        return
 
-# Sry musste es schonmal testen :D
-# TODO: Wenn das Bild nicht um 90° oder 180° gedreht wird, verändert sich die Auflösung, da könntest du nochmal schauen, ob es dafür einen fix gibt mit img.show() kannst du dir das Bild vorher ausgeben lassen
-def drehen(image_path, degrees):
-    
-    img = Image.open(image_path)
-    if degrees == 90 or degrees == 180:
+    # Falls das Bild um 90° oder 180° gedreht wird, behalten wir die Originaldimensionen bei
+    if degrees in [90, 180]:
         original_dimensions = img.size
-        resized_img = rotated_img.resize(original_dimensions, Image.ANTIALIAS)
-    else:
-        rotated_img = img.rotate(degrees)
-    
-    original_dimensions = img.size
-    resized_img = rotated_img.resize(original_dimensions, Image.ANTIALIAS)
+        rotated_img = rotated_img.resize(original_dimensions, Image.Resampling.LANCZOS)
 
     # Bild anzeigen lassen
-    rotated_img.show()
-
-    # Speichern des Bildes
-    rotated_img.save(image_path)
+    if preview:
+        print("Drehen preview triggered")
+        rotated_img.show()
+    else:
+        # Speichern des Bildes
+        print("Drehen apply triggered")
+        rotated_img.save(image_path)
 
     return image_path + " gedreht um " + str(degrees) + " Grad°"
