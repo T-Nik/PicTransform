@@ -25,7 +25,10 @@ from kivy.uix.dropdown import DropDown
 # "Drehen°"-Funktion von "Kevin"
 from modules.drehen import drehen
 
-# "Filter"-Funktionen von Johanna
+# "Weichzeichnen"-Funktion von "Johannas"
+from modules.weichzeichnen import weichzeichnen
+
+# "Filter"-Funktionen von Jenny
 import modules.filter as filter
 from modules.filter import Filter_Presets
 
@@ -180,7 +183,7 @@ class PicTransform(App):
 #region "Drehen°"
     def show_rotate_controls(self):
         self.clear_action_bar()
-        
+
         # Neues label hinzufügen für Grad°
         self.degree_label = Label(text='0°')
         self.root.ids.aktions_leiste.add_widget(self.degree_label)
@@ -216,6 +219,45 @@ class PicTransform(App):
         self.root.ids.image_widget.reload()
 #endregion "Drehen°"
 
+#region "Weichzeichnen"
+    def show_blur_controls(self):
+        self.clear_action_bar()
+        
+        # Neues label hinzufügen für Stärke
+        self.degree_label = Label(text='0%')
+        self.root.ids.aktions_leiste.add_widget(self.degree_label)
+
+        # Slider hinzufügen
+        self.blur_slider = Slider(min=0, max=100, value=0)
+        self.blur_slider.bind(value=lambda instance, value: setattr(self.degree_label, 'text', f'{int(value)}%'))
+        self.root.ids.aktions_leiste.add_widget(self.blur_slider)
+
+        # "Vorschau" Button hinzufügen
+        self.preview_button = Button(text='Vorschau', on_release=self.preview_blur, background_color=(1, 1, 1, 0.5))
+        self.root.ids.aktions_leiste.add_widget(self.preview_button)
+
+        # "Anwenden" Button hinzufügen
+        self.apply_button = Button(text='Anwenden', on_release=self.apply_blur, background_color=(0.486, 0.988, 0, 1))
+        self.root.ids.aktions_leiste.add_widget(self.apply_button)
+        
+
+    def preview_blur(self, callBackWidget):
+        radius = self.blur_slider.value
+        # Nachkommastellen enfternen
+        radius = int(radius)
+        # von ihr aus modules/drehen.py aufrufen
+        print(weichzeichnen(self.actualImagePath, radius, preview=True))
+
+    def apply_blur(self, callBackWidget):
+        radius = self.blur_slider.value
+        # Nachkommastellen enfternen
+        radius = int(radius)
+        # von ihr aus modules/drehen.py aufrufen
+        print(weichzeichnen(self.actualImagePath, radius, preview=False))
+        self.root.ids.image_widget.source = self.actualImagePath
+        self.root.ids.image_widget.reload()
+#endregion "Weichzeichnen"
+        
 
 if __name__ == '__main__':
     PicTransform().run()

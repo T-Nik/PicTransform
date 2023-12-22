@@ -20,54 +20,17 @@ from PIL import ImageFilter
 import os
 
 # Der Funktion werden ein Dateipfad zum Bild sowie der gewünschte Radius übergeben.
-def weichzeichnen (image_path, radius):
+def weichzeichnen(image_path, radius, preview=True):
 
     #Das Bild, mit dessen Dateipfad die Funktion geöffnet wurde, wird in die Variable "im" gespeichert.
     im = Image.open(image_path)
-
-    #Anzeigen des importierten Bildes
-    im.show()
-        
     #Das durch den Blur Filter manipulierte Bild wird in der Variable "blured_img" gespeichert.
     blured_img = im.filter(ImageFilter.BoxBlur(radius))
 
     #Das manipulierte Bild wird angezeigt.
-    blured_img.show()
-
-    #In die Variable Dateiendung, wird die Dateiendung des in die Funktion importierten Bildes gespeichert.
-    dateifpad, dateiendung = os.path.splitext(image_path)
-    print (dateiendung)
-
-    #Bedingung prüft, welche Dateiendung in der Variablen "Dateiendung" gespeichert ist.
-    #Bei Dateiendung ".jpg" wird das manipulierte Bild entsprechend als ".jpg" abgespeichert
-    if (dateiendung == ".jpg"):
-
-        #Speichern des manipulierten Bildes im Ordner "Images" mit dem Dateinamen "Blured_img" und der Dateiendung ".jpg"
-        blured_img.save("./images/blured_img.jpg")
-
-        #Speichern des Dateipfades des manipulierten Bildes in die Variable "newimage_path"
-        newimage_path= "./images/blured_img.jpg"
-         
-        #Bei Dateiendung ".png" wird das manipulierte Bild entsprechend als ".png" abgespeichert
-    elif (dateiendung == ".png"):
-
-        #Speichern des manipulierten Bildes im Ordner "Images" mit dem Dateinamen "Blured_img" und der Dateiendung ".png"
-        blured_img.save("./images/blured_img.png")
-            
-        #Speichern des Dateipfades des manipulierten Bildes in die Variable "newimage_path"
-        newimage_path="./images/blured_img.png"
-
-    #Bei Dateiendung ".jpeg" wird das manipulierte Bild entsprechend als ".jpeg" abgespeichert
-    elif (dateiendung == ".jpeg"):
-           
-        #Speichern des manipulierten Bildes im Ordner "Images" mit dem Dateinamen "Blured_img" und der Dateiendung ".jpeg"
-        blured_img.save("./images/blured_img.jpeg")
-
-       #Speichern des Dateipfades des manipulierten Bildes in die Variable "newimage_path"
-        newimage_path= "./images/blured_img.jpeg"
-    
-    #Gibt den Dateipfad des manipulierten Bildes aus    
-    return newimage_path      
-    
-#Testaufruf der Funktion
-weichzeichnen ("./images/cake.jpg", 100)
+    if preview:
+        blured_img.show()
+        return "Weichzeichnen preview getriggered"
+    else:
+        blured_img.save(image_path)
+        return image_path + " weichgezeichnet mit einem Radius von " + str(radius) + " Pixeln."

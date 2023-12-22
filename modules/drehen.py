@@ -21,11 +21,11 @@ def drehen(image_path, degrees, preview=True):
 
     # Bild anzeigen lassen
     if preview:
-        print("Drehen preview triggered")
+        print("Drehen preview getriggered")
         rotated_img.show()
     else:
         # Speichern des Bildes
-        print("Drehen apply triggered")
+        print("Drehen apply getriggered")
         rotated_img.save(image_path)
 
     return image_path + " gedreht um " + str(degrees) + " Grad°"
