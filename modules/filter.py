@@ -93,6 +93,9 @@ class Filter:
     def __str__(self):
         return str(self.name)
 
+
+
+
 class Filter_Presets:
 
     filter_dict = {

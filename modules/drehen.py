@@ -17,7 +17,7 @@ def drehen(image_path, degrees, preview=True):
     # Falls das Bild um 90° oder 180° gedreht wird, behalten wir die Originaldimensionen bei
     if degrees in [90, 180]:
         original_dimensions = img.size
-        rotated_img = rotated_img.resize(original_dimensions, Image.Resampling.LANCZOS)
+        rotated_img = rotated_img.resize(original_dimensions, Image.Resampling.LANCZOS) # Lanczos-Filter für bessere Qualität
 
     # Bild anzeigen lassen
     if preview:

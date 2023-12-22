@@ -18,6 +18,7 @@ from kivy.uix.filechooser import FileChooserIconView
 from kivy.uix.slider import Slider
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.dropdown import DropDown
 
 
 # Imports eigener Module
@@ -136,27 +137,41 @@ class PicTransform(App):
     def show_filter_controls(self):
         self.clear_action_bar()
 
-        # Altes label entfernen
-        self.root.ids.aktions_leiste.remove_widget(self.root.ids.aktions_leiste_label)
-        # Neues label hinzufügen
-        self.filter_label = Label(text=str(Filter_Presets.current_filter))
-        self.root.ids.aktions_leiste.add_widget(self.filter_label)
-        # Slider hinzufügen
-        self.filter_slider = Slider(min=0, max=int(len(Filter_Presets.filter_dict.values())) - 1, value=0, step=1)
-        self.filter_slider.bind(value=lambda instance, value: setattr(self.filter_label, 'text', f'{list(Filter_Presets.filter_dict.values())[int(value)]}'))
-        self.root.ids.aktions_leiste.add_widget(self.filter_slider)
+        # Label für Dropdown-Menü hinzufügen
+        self.filter_label = Label(text='Filter:')
+
+        # Dropdown-Menü erstellen
+        self.filter_dropdown = DropDown()
+        self.drop_down_button = Button(text=str(Filter_Presets.current_filter), height=50, size_hint_y=None, color=(0, 0, 0, 1))
+
+        # Dropdown-Menü mit filter_label in ein vertikales Box_Layout
+        self.filter_box_layout = BoxLayout(orientation='vertical', size_hint_x=None, width=200)
+        self.filter_box_layout.add_widget(self.filter_label)
+        self.filter_box_layout.add_widget(self.drop_down_button)
+        self.root.ids.aktions_leiste.add_widget(self.filter_box_layout)
+
+        for filter_name in Filter_Presets.filter_dict.keys():
+            btn = Button(text=filter_name, size_hint_y=None, height=44)
+            btn.bind(on_release=lambda btn: self.filter_dropdown.select(btn.text))
+            self.filter_dropdown.add_widget(btn)
+
+        # Dropdown öffnen, wenn der Button gedrückt wird
+        self.drop_down_button.bind(on_release=self.filter_dropdown.open)
+        # Aktualisieren des Textes des Buttons, wenn ein Eintrag im Dropdown ausgewählt wird
+        self.filter_dropdown.bind(on_select=lambda instance, x: setattr(self.drop_down_button, 'text', x))
 
         # Button hinzufügen
-        self.preview_button = Button(text='Vorschau', on_release=self.preview_filter)
+        self.preview_button = Button(text='Vorschau', on_release=self.preview_filter, background_color=(1, 1, 1, 0.5))
         self.root.ids.aktions_leiste.add_widget(self.preview_button)
-        self.apply_button = Button(text='Anwenden', on_release=self.apply_filter)
+        self.apply_button = Button(text='Anwenden', on_release=self.apply_filter, background_color=(0.486, 0.988, 0, 1))
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
 
+
     def preview_filter(self, callBackWidget):
-        Filter_Presets.filter_dict[self.filter_label.text].apply_config(self.actualImagePath, preview=True)
+        Filter_Presets.filter_dict[self.drop_down_button.text].apply_config(self.actualImagePath, preview=True)
 
     def apply_filter(self, callBackWidget):
-        Filter_Presets.filter_dict[self.filter_label.text].apply_config(self.actualImagePath, preview=False)
+        Filter_Presets.filter_dict[self.drop_down_button.text].apply_config(self.actualImagePath, preview=False)
         self.root.ids.image_widget.source = self.actualImagePath
         self.root.ids.image_widget.reload()
 #endregion "Filter"
@@ -165,9 +180,7 @@ class PicTransform(App):
 #region "Drehen°"
     def show_rotate_controls(self):
         self.clear_action_bar()
-
-        # Altes label entfernen
-        self.root.ids.aktions_leiste.remove_widget(self.root.ids.aktions_leiste_label)
+        
         # Neues label hinzufügen für Grad°
         self.degree_label = Label(text='0°')
         self.root.ids.aktions_leiste.add_widget(self.degree_label)
@@ -178,11 +191,11 @@ class PicTransform(App):
         self.root.ids.aktions_leiste.add_widget(self.rotate_slider)
 
         # "Vorschau" Button hinzufügen
-        self.preview_button = Button(text='Vorschau', on_release=self.preview_rotate)
+        self.preview_button = Button(text='Vorschau', on_release=self.preview_rotate, background_color=(1, 1, 1, 0.5))
         self.root.ids.aktions_leiste.add_widget(self.preview_button)
 
         # "Anwenden" Button hinzufügen
-        self.apply_button = Button(text='Anwenden', on_release=self.apply_rotate)
+        self.apply_button = Button(text='Anwenden', on_release=self.apply_rotate, background_color=(0.486, 0.988, 0, 1))
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
         
 
