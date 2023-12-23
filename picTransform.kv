@@ -33,7 +33,7 @@
             Button:
                 text: 'Sättigung'
             Button:
-                text: 'Schärfen'
+                text: 'Weichzeichnen'
                 on_release: app.show_blur_controls()
             Button:
                 text: 'Drehen°'
@@ -79,6 +79,7 @@
                 text: 'Meta Daten'
             Button:
                 text: 'Objekt Erkennung'
+                on_release: app.show_objectDetection_controls()
             Button:
                 text: 'Auflösung'
             Button:
@@ -93,4 +94,4 @@
         spacing: 20
         Label:
             id: aktions_leiste_label
-            text: 'Aktionsleiste mit Slidern und Buttons für die Effekte'
+            text: 'Diese App ermöglicht das Importieren und bearbeiten von .png, .jpg und .jpeg Dateien.'

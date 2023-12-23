@@ -19,6 +19,7 @@ from kivy.uix.slider import Slider
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.dropdown import DropDown
+from kivy.uix.scrollview import ScrollView
 
 
 # Imports eigener Module
@@ -31,6 +32,9 @@ from modules.weichzeichnen import weichzeichnen
 # "Filter"-Funktionen von Jenny
 import modules.filter as filter
 from modules.filter import Filter_Presets
+
+# "Objekt Erkennung"-Funktionen von "Niklas M."
+from modules.objectDetection import object_detection
 
 #endregion Imports
 
@@ -219,6 +223,7 @@ class PicTransform(App):
         self.root.ids.image_widget.reload()
 #endregion "Drehen°"
 
+
 #region "Weichzeichnen"
     def show_blur_controls(self):
         self.clear_action_bar()
@@ -245,18 +250,65 @@ class PicTransform(App):
         radius = self.blur_slider.value
         # Nachkommastellen enfternen
         radius = int(radius)
-        # von ihr aus modules/drehen.py aufrufen
         print(weichzeichnen(self.actualImagePath, radius, preview=True))
 
     def apply_blur(self, callBackWidget):
         radius = self.blur_slider.value
         # Nachkommastellen enfternen
         radius = int(radius)
-        # von ihr aus modules/drehen.py aufrufen
         print(weichzeichnen(self.actualImagePath, radius, preview=False))
         self.root.ids.image_widget.source = self.actualImagePath
         self.root.ids.image_widget.reload()
 #endregion "Weichzeichnen"
+        
+
+#region "Objekt Erkennung"
+    def show_objectDetection_controls(self):
+        self.clear_action_bar()
+
+        # Klassenlabels laden
+        with open("nn_model/coco.names", "r") as f:
+            LABELS = f.read().strip().split("\n")
+        
+        # Neues label hinzufügen für Stärke
+        self.label = Label(
+            text=f'Objekt Erkennung mit YOLOv3-tiny (COCO) zur Klassifizierung von 80 Objekten:\n\n {LABELS}',
+            size_hint_y=None,  # Erlaubt dem Label, seine Höhe basierend auf dem Inhalt anzupassen
+            text_size=(350, None),  # Setzt die Breite für den Textumbruch, Höhe ist unbegrenzt
+            halign='left',  # Horizontale Ausrichtung des Texts im Label
+            valign='middle'  # Vertikale Ausrichtung des Texts im Label
+        )
+
+        # Funktion zur Aktualisierung der Größe des Labels nach dem Setzen des Textes
+        def update_label_size(instance, value): 
+            instance.size_hint_y = None
+            instance.height = instance.texture_size[1]
+        self.label.bind(texture_size=update_label_size)
+
+        # Erstellen eines ScrollView-Widgets
+        scroll_view = ScrollView(size_hint=(1, None), size=(350, self.label.height + 2))
+
+        # Hinzufügen des Labels zum ScrollView
+        scroll_view.add_widget(self.label)
+        self.root.ids.aktions_leiste.add_widget(scroll_view)
+
+        # "Vorschau" Button hinzufügen
+        self.preview_button = Button(text='Life Kamera\n(braucht ein paar Sek. zum Laden)', on_release=self.preview_objectDetection, background_color=(1, 1, 1, 0.5))
+        self.root.ids.aktions_leiste.add_widget(self.preview_button)
+
+        # "Anwenden" Button hinzufügen
+        self.apply_button = Button(text='Nur Bild', on_release=self.apply_objectDetection, background_color=(0.486, 0.988, 0, 1))
+        self.root.ids.aktions_leiste.add_widget(self.apply_button)
+        
+
+    def preview_objectDetection(self, callBackWidget):
+        object_detection()
+
+    def apply_objectDetection(self, callBackWidget):
+        object_detection(self.actualImagePath)
+        self.root.ids.image_widget.source = self.actualImagePath
+        self.root.ids.image_widget.reload()
+#endregion "Objekt Erkennung"
         
 
 if __name__ == '__main__':

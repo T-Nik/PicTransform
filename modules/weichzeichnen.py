@@ -19,6 +19,8 @@ from PIL import ImageFilter
 #Import des OS-Moduls
 import os
 
+# TODO: negativer Radius ermöglicht das bluren von bildern von -100 bis 0 und 0 bis 100 schärft das Bild
+
 # Der Funktion werden ein Dateipfad zum Bild sowie der gewünschte Radius übergeben.
 def weichzeichnen(image_path, radius, preview=True):
 
