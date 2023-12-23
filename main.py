@@ -280,10 +280,7 @@ class PicTransform(App):
         )
 
         # Funktion zur Aktualisierung der Größe des Labels nach dem Setzen des Textes
-        def update_label_size(instance, value): 
-            instance.size_hint_y = None
-            instance.height = instance.texture_size[1]
-        self.label.bind(texture_size=update_label_size)
+        self.label.bind(texture_size=lambda instance, value: setattr(instance, 'height', instance.texture_size[1]))
 
         # Erstellen eines ScrollView-Widgets
         scroll_view = ScrollView(size_hint=(1, None), size=(350, self.label.height + 2))

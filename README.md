@@ -16,5 +16,5 @@ Jeden Sonntag onboarden wir die Module und bauen sie in die GUI ein.
 7. Objekt Erkennung (Niklas M)
 8. Auflösung (Johanna)
 9. Ausschneiden (Jenny)
-   -> Kannste dir evlt. sparen, da für die GUI zu komplex
+   -> Kannste dir sparen, da für die GUI zu komplex
 10. GUI (Niklas)

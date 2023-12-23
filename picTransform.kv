@@ -34,15 +34,16 @@
                 text: 'Sättigung'
             Button:
                 text: 'Weichzeichnen'
+                color: "green"
                 on_release: app.show_blur_controls()
             Button:
                 text: 'Drehen°'
+                color: "green"
                 on_release: app.show_rotate_controls()
             Button:
                 text: 'FarbFilter'
+                color: "green"
                 on_release: app.show_filter_controls()
-            Button:
-                text: 'Invertieren'
 
         # Image Area
         FloatLayout:
@@ -79,11 +80,12 @@
                 text: 'Meta Daten'
             Button:
                 text: 'Objekt Erkennung'
+                color: "green"
                 on_release: app.show_objectDetection_controls()
             Button:
                 text: 'Auflösung'
             Button:
-                text: 'Ausschneiden'
+                text: 'Invertieren'
 
 
     # Aktionsleiste
