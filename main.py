@@ -272,7 +272,7 @@ class PicTransform(App):
         
         # Neues label hinzufügen für Stärke
         self.label = Label(
-            text=f'Objekt Erkennung mit YOLOv3-tiny (COCO) zur Klassifizierung von 80 Objekten:\n\n {LABELS}',
+            text=f'Objekt Erkennung mit YOLOv3-tiny (COCO) zur Klassifizierung von 80 Objekten:\n\n {LABELS} \n\nDieses Modell ist ein Convolutional NN mit genau 8.849.182 Parametern',
             size_hint_y=None,  # Erlaubt dem Label, seine Höhe basierend auf dem Inhalt anzupassen
             text_size=(350, None),  # Setzt die Breite für den Textumbruch, Höhe ist unbegrenzt
             halign='left',  # Horizontale Ausrichtung des Texts im Label
