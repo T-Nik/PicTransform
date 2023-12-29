@@ -1,0 +1,99 @@
+<Controller>:
+    spacing: 10
+    padding: 10
+    orientation: 'vertical'
+
+    # Datei Leiste
+    BoxLayout:
+        id: datei_leiste
+        size_hint_y: 0.1
+        # Alle Elemente soll einen Margin von 10px kriegen
+        spacing: 10
+        Button:
+            id: import_button
+            text: 'Import'
+            on_release: app.open_fileChooser()
+        Button:
+            text: 'Export'
+            on_release: app.export_image()
+            
+            
+    # Middle Area
+    BoxLayout:
+        id: middle_area
+        spacing: 10
+        orientation: 'horizontal'
+
+        # Left Panel
+        BoxLayout:
+            id: left_panel
+            spacing: 10
+            orientation: 'vertical'
+            size_hint_x: 0.1
+            Button:
+                text: 'Sättigung'
+            Button:
+                text: 'Weichzeichnen'
+                color: "green"
+                on_release: app.show_blur_controls()
+            Button:
+                text: 'Drehen°'
+                color: "green"
+                on_release: app.show_rotate_controls()
+            Button:
+                text: 'FarbFilter'
+                color: "green"
+                on_release: app.show_filter_controls()
+
+        # Image Area
+        FloatLayout:
+            id: image_area
+            size_hint_x: 0.8
+            # Grauer Hintergrund
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            canvas.after:
+                Color:
+                    rgba: 0.5, 0.5, 1, 0.5  # Weiße Farbe für die Umrandung
+                Line:
+                    rectangle: self.x, self.y, self.width, self.height
+                    width: 1.5
+            Image:
+                id: image_widget
+                allow_stretch: True
+                keep_ratio: True
+                source: 'icons/Import.png'
+                size_hint: 0.5, 0.5  # 50% der Größe des FloatLayouts
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}  # Zentriert im FloatLayout
+           
+        # Right Panel
+        BoxLayout:
+            id: right_panel
+            spacing: 10
+            orientation: 'vertical'
+            size_hint_x: 0.1
+            Button:
+                text: 'Meta Daten'
+            Button:
+                text: 'Objekt Erkennung'
+                color: "green"
+                on_release: app.show_objectDetection_controls()
+            Button:
+                text: 'Auflösung'
+            Button:
+                text: 'Invertieren'
+
+
+    # Aktionsleiste
+    BoxLayout:
+        id: aktions_leiste
+        size_hint_y: 0.2
+        # Alle Elemente soll einen Margin von 10px kriegen
+        spacing: 20
+        Label:
+            id: aktions_leiste_label
+            text: 'Diese App ermöglicht das Importieren und bearbeiten von .png, .jpg und .jpeg Dateien.'
