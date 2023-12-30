@@ -3,7 +3,7 @@ from PIL import Image
 import exif
 import json 
 
-from ImageErrorHandling_Module import ImageErrorHandling
+from modules.meta_data.ImageErrorHandling_Module import ImageErrorHandling
 
 #logging.basicConfig(filename='pictransform.log', encoding='utf-8', level=logging.DEBUG)
 logging.basicConfig(format='%(asctime)s %(message)s')
@@ -15,7 +15,6 @@ class ImageMetaData:
 
         # Setzt die Attribute der Klasse: Dateipfad und grundlegende Eigenschaften des Bildes
         self.relative_filepath = relative_filepath
-
 
 
     # Getter-Methoden

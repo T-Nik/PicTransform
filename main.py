@@ -36,6 +36,9 @@ from modules.filter import Filter_Presets
 # "Objekt Erkennung"-Funktionen von "Niklas M."
 from modules.objectDetection import object_detection
 
+# "Meta Daten"-Funktion von "Niklas T."
+from modules.meta_data.ImageMetaData_Module import ImageMetaData
+
 #endregion Imports
 
 
@@ -307,6 +310,25 @@ class PicTransform(App):
         self.root.ids.image_widget.reload()
 #endregion "Objekt Erkennung"
         
+
+#region "MetaData"
+        
+    def show_meta_data_controls(self):
+        self.clear_action_bar()
+        # "Anwenden" Button hinzufügen
+        self.apply_button = Button(text='Print Exif Data', on_release=self.print_exif_data, background_color=(0.486, 0.988, 0, 1))
+        self.root.ids.aktions_leiste.add_widget(self.apply_button)
+    
+    def print_meta_data(self, callBackWidget):
+        meta_data = ImageMetaData(self.actualImagePath)
+        print(meta_data.get_basic_properties())
+    
+    def print_exif_data(self, callBackWidget):
+        meta_data = ImageMetaData(self.actualImagePath)
+        print(meta_data.get_exif_values())
+
+#endregion "MetaData"
+
 
 if __name__ == '__main__':
     PicTransform().run()

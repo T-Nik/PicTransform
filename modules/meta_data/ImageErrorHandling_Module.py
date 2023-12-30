@@ -1,5 +1,5 @@
 import logging
-from logger_config import setup_logging
+from modules.meta_data.logger_config import setup_logging
 
 setup_logging()
 
