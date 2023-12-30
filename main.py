@@ -315,17 +315,28 @@ class PicTransform(App):
         
     def show_meta_data_controls(self):
         self.clear_action_bar()
-        # "Anwenden" Button hinzufügen
+
+        # "Print" Button hinzufügen
         self.apply_button = Button(text='Print Exif Data', on_release=self.print_exif_data, background_color=(0.486, 0.988, 0, 1))
+        self.root.ids.aktions_leiste.add_widget(self.apply_button)
+
+        # "Delete Meta Data" Button hinzufügen
+        self.apply_button = Button(text='Delete Meta Data', on_release=self.remove_meta_data, background_color=(1, 0.5, 0.5, 1))
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
     
     def print_meta_data(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
         print(meta_data.get_basic_properties())
+        # TODO: Hier anstatt der Consolen Ausgabe die Werte als tabelle in einem Popup anzeigen, mit einem Button zum schließen und zum löschen der Werte, die dann auch life in der Tabelle entfernt werden
+        # sowie im Bild selbst.
     
     def print_exif_data(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
         print(meta_data.get_exif_values())
+
+    def remove_meta_data(self, callBackWidget):
+        meta_data = ImageMetaData(self.actualImagePath)
+        meta_data.delete_EXIF_metadata()
 
 #endregion "MetaData"
 

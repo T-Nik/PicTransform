@@ -34,8 +34,8 @@ class ImageMetaData:
             return []
     
     def delete_EXIF_metadata(self):
-        self.__remove_exif_and_overwrite(self)
-        return self.get_exif_values(self)
+        self.__remove_exif_and_overwrite()
+        return self.get_exif_values()
 
     
 
