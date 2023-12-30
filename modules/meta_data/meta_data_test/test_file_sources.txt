@@ -1,1 +1,0 @@
-Canon_40D.jpg: https://github.com/ianare/exif-samples
