@@ -25,10 +25,18 @@ class Filter:
         self.color_temperature_change = color_temperature_change
         self.color_thresholds = color_thresholds
 
-    def apply_config(self, image_path, preview=True):
+    def apply_config(self, image_path: str, preview: bool = True) -> None:
+        """
+        Wendet die Filter-Konfiguration an oder öffnet ein Vorschau-Fenster.
+        """
 
         self.set_current_preset()
-        image = Image.open(image_path)
+
+        try:
+            image = Image.open(image_path)
+        except:
+            print("Bild konnte nicht geöffnet werden")
+            return
 
         def apply_threshold(image):
 
@@ -70,18 +78,20 @@ class Filter:
         image.show() if preview else image.save(image_path)
 
     def set_current_preset(self):
-        filter.current_filter = self
+        Filter_Presets.current_filter = self
 
     def __str__(self):
         return str(self.name)
 
-filter_dict = {
-    "Original": Filter("Original"),
-    "Grau": Filter("Grau", saturation=0.0),
-    "Schwarzweiß": Filter("Schwarzweiß", brightness=1.2, color_thresholds=(0, 0, 0, 175)),
-    "Warm": Filter("Warm", color_temperature_change=+2),
-    "Kalt": Filter("Kalt", color_temperature_change=-2),
-    "Poster": Filter("Poster", brightness=1.0, contrast=1.2, color_thresholds=(170, 170, 170, 0))
-        }
+class Filter_Presets:
 
-current_filter = filter_dict["Original"]
+    filter_dict = {
+        "Original": Filter("Original"),
+        "Grau": Filter("Grau", saturation=0.0),
+        "Schwarzweiß": Filter("Schwarzweiß", brightness=1.2, color_thresholds=(0, 0, 0, 175)),
+        "Warm": Filter("Warm", color_temperature_change=+2),
+        "Kalt": Filter("Kalt", color_temperature_change=-2),
+        "Poster": Filter("Poster", brightness=1.0, contrast=1.2, color_thresholds=(170, 170, 170, 0))
+            }
+
+    current_filter = filter_dict["Original"]
