@@ -316,30 +316,58 @@ class PicTransform(App):
         self.clear_action_bar()
 
         # "Print Exif" Button hinzufügen
-        self.apply_button = Button(text='Print Meta Data', on_release=self.print_exif_data, background_color=(0.486, 0.988, 0, 1))
+        self.apply_button = Button(text='Exif Metadaten', on_release=self.print_exif_data, background_color=(0.486, 0.988, 0, 1))
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
 
         # "Print Basic" Button hinzufügen
-        self.apply_button = Button(text='Print Basic Data', on_release=self.print_exif_data, background_color=(0.486, 0.988, 0, 1))
-        self.root.ids.aktions_leiste.add_widget(self.apply_button)
-
-        # "Delete Meta Data" Button hinzufügen
-        self.apply_button = Button(text='Delete Meta Data', on_release=self.remove_meta_data, background_color=(1, 0.5, 0.5, 1))
+        self.apply_button = Button(text='Basic Metadaten', on_release=self.print_basic_properties, background_color=(0.486, 0.988, 0, 1))
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
     
     def print_basic_properties(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
         basic_properties = meta_data.get_basic_properties()
+
         print(f"Basic Properties für das Bild: {os.path.basename(self.actualImagePath)}\n")
         print("--------------------------------------------------------")
-        for key, value in basic_properties.items():
-            print(f"{key}: {value}")
+        # durch das tuple basic_properties iterieren
+        for i in range(len(basic_properties)):
+            print(f"{basic_properties[i]}")
         print("--------------------------------------------------------")
+
+        # Erstellt ein Label, um die Metadaten in einer Tabelle anzuzeigen
+        label = Label()
+        label.text += "--------------------------------------------------------\n"
+        for i in range(len(basic_properties)):
+            label.text += f"{basic_properties[i]}\n"
+        label.text += "--------------------------------------------------------\n"
+        label.text_size = (600, None) # Setzt die Breite für den Textumbruch, Höhe ist unbegrenzt
+        label.halign = "center"
+
+        # Erstellt Buttons um Meta-Daten zu löschen oder Popup zu schließen
+        button_close = Button(text="Schließen", size_hint=(0.25, 0.15), on_release=self.dismiss_popup)
+        button_close.pos_hint = {"center_x": 0.5, "center_y": 0.5}
+
+        # BoxLayout mit vertikaler Ausrichtung
+        box_layout = BoxLayout(orientation='vertical', size_hint_y=None, height=600)
+        # Füge das Label und den Button zur BoxLayout hinzu
+        box_layout.add_widget(label)     
+        box_layout.add_widget(button_close)
+
+        # Erstelle die ScrollView mit dem BoxLayout als Inhalt
+        scroll_view = ScrollView(size_hint=(1, 1))
+        scroll_view.add_widget(box_layout)
+    
+        # Create the Popup with the ScrollView as its content
+        self.meta_data_popup = Popup(title=f"Basic-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}", content=scroll_view, size_hint=(0.6, 0.8))
+        self.meta_data_popup.open()
+    
+    def dismiss_popup(self, instance):
+        self.meta_data_popup.dismiss()
 
     def print_exif_data(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
         exif_data = meta_data.get_exif_values()
-        print(f"Exif-Daten für das Bild: {os.path.basename(self.actualImagePath)}\n")
+        print(f"Exif-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}\n")
         print("--------------------------------------------------------")
         for key, value in exif_data.items():
             print(f"{key}: {value}")
