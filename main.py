@@ -322,6 +322,10 @@ class PicTransform(App):
         # "Print Basic" Button hinzufügen
         self.apply_button = Button(text='Basic Metadaten', on_release=self.print_basic_properties, background_color=(0.486, 0.988, 0, 1))
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
+
+        # "Remove Exif" Button hinzufügen
+        self.remove_meta_data_button = Button(text='Exif Metadaten entfernen', on_release=self.remove_meta_data, background_color=(1, 0.5, 0.5, 1))
+        self.root.ids.aktions_leiste.add_widget(self.remove_meta_data_button)
     
     def print_basic_properties(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
@@ -367,11 +371,47 @@ class PicTransform(App):
     def print_exif_data(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
         exif_data = meta_data.get_exif_values()
+
         print(f"Exif-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}\n")
         print("--------------------------------------------------------")
-        for key, value in exif_data.items():
-            print(f"{key}: {value}")
+        if not exif_data or not isinstance(exif_data, dict):
+            print("Keine Exif-Daten gefunden!")
+        else:
+            for key, value in exif_data.items():
+                print(f"{key}: {value}")
         print("--------------------------------------------------------")
+
+        # Erstellt ein Label, um die Metadaten in einer Tabelle anzuzeigen
+        label = Label()
+        label.text += "--------------------------------------------------------\n"
+
+        if not exif_data or not isinstance(exif_data, dict):
+            label.text += "Keine Exif-Daten gefunden!\n"
+        else:
+            for key, value in exif_data.items():
+                label.text += f"{key}: {value}\n"
+
+        label.text += "--------------------------------------------------------\n"
+        label.text_size = (600, None)  # Setzt die Breite für den Textumbruch, Höhe ist unbegrenzt
+        label.halign = "center"
+
+        # Erstellt Buttons um Meta-Daten zu löschen oder Popup zu schließen
+        button_close = Button(text="Schließen", size_hint=(0.25, 0.15), on_release=self.dismiss_popup)
+        button_close.pos_hint = {"center_x": 0.5, "center_y": 0.5}
+
+        # BoxLayout mit vertikaler Ausrichtung
+        box_layout = BoxLayout(orientation='vertical', size_hint_y=None, height=600)
+        # Füge das Label und den Button zur BoxLayout hinzu
+        box_layout.add_widget(label)     
+        box_layout.add_widget(button_close)
+
+        # Erstelle die ScrollView mit dem BoxLayout als Inhalt
+        scroll_view = ScrollView(size_hint=(1, 1))
+        scroll_view.add_widget(box_layout)
+    
+        # Create the Popup with the ScrollView as its content
+        self.meta_data_popup = Popup(title=f"Exif-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}", content=scroll_view, size_hint=(0.6, 0.8))
+        self.meta_data_popup.open()
 
     def remove_meta_data(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
