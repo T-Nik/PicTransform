@@ -111,7 +111,6 @@ class PicTransform(App):
 
             self.popup.dismiss() # schließt das FileChooser-Popup
 
-
     # Funktion zum exportieren des Bildes
     def export_image(self):
         # Popup zum Auswählen des Speicherorts
@@ -316,23 +315,35 @@ class PicTransform(App):
     def show_meta_data_controls(self):
         self.clear_action_bar()
 
-        # "Print" Button hinzufügen
-        self.apply_button = Button(text='Print Exif Data', on_release=self.print_exif_data, background_color=(0.486, 0.988, 0, 1))
+        # "Print Exif" Button hinzufügen
+        self.apply_button = Button(text='Print Meta Data', on_release=self.print_exif_data, background_color=(0.486, 0.988, 0, 1))
+        self.root.ids.aktions_leiste.add_widget(self.apply_button)
+
+        # "Print Basic" Button hinzufügen
+        self.apply_button = Button(text='Print Basic Data', on_release=self.print_exif_data, background_color=(0.486, 0.988, 0, 1))
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
 
         # "Delete Meta Data" Button hinzufügen
         self.apply_button = Button(text='Delete Meta Data', on_release=self.remove_meta_data, background_color=(1, 0.5, 0.5, 1))
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
     
-    def print_meta_data(self, callBackWidget):
+    def print_basic_properties(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
-        print(meta_data.get_basic_properties())
-        # TODO: Hier anstatt der Consolen Ausgabe die Werte als tabelle in einem Popup anzeigen, mit einem Button zum schließen und zum löschen der Werte, die dann auch life in der Tabelle entfernt werden
-        # sowie im Bild selbst.
-    
+        basic_properties = meta_data.get_basic_properties()
+        print(f"Basic Properties für das Bild: {os.path.basename(self.actualImagePath)}\n")
+        print("--------------------------------------------------------")
+        for key, value in basic_properties.items():
+            print(f"{key}: {value}")
+        print("--------------------------------------------------------")
+
     def print_exif_data(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
-        print(meta_data.get_exif_values())
+        exif_data = meta_data.get_exif_values()
+        print(f"Exif-Daten für das Bild: {os.path.basename(self.actualImagePath)}\n")
+        print("--------------------------------------------------------")
+        for key, value in exif_data.items():
+            print(f"{key}: {value}")
+        print("--------------------------------------------------------")
 
     def remove_meta_data(self, callBackWidget):
         meta_data = ImageMetaData(self.actualImagePath)
