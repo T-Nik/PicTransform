@@ -1,6 +1,20 @@
-# logger_config.py
 import logging
-LOGGING_FILENAME = 'logfile.log'
+# Importiert das Logging-Modul, um ein Logging-System für die Anwendung bereitzustellen.
+
+# Die folgende Zeile ist auskommentiert. Sie würde normalerweise den Namen der Log-Datei festlegen,
+# in der die Protokolle gespeichert werden sollen. Es ist nützlich, wenn Sie die Protokolle in eine Datei
+# umleiten möchten, anstatt sie auf der Konsole auszugeben.
+#LOGGING_FILENAME = 'logfile.log'
 
 def setup_logging():
-    logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s', level = logging.INFO)
+    # Definiert eine Funktion zum Einrichten der grundlegenden Konfiguration des Logging-Systems.
+    # Diese Funktion wird aufgerufen, um das Logging-System zu initialisieren und zu konfigurieren.
+
+    # 'basicConfig' ist eine Methode im Logging-Modul, die die grundlegenden Einstellungen für das Logging-System festlegt.
+    # Hier wird das Format der Log-Nachrichten und das Log-Level bestimmt.
+    # - '%(asctime)s': Fügt den Zeitstempel hinzu, wann die Log-Nachricht erstellt wurde.
+    # - '%(name)s': Der Name des Loggers, der die Nachricht erzeugt hat.
+    # - '%(levelname)s': Der Schweregrad der Nachricht (INFO, WARNING, ERROR, etc.).
+    # - '%(message)s': Die eigentliche Log-Nachricht.
+    # - 'level=logging.INFO': Setzt das Log-Level auf INFO, was bedeutet, dass INFO-, WARNING-, ERROR- und CRITICAL-Meldungen protokolliert werden.
+    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
