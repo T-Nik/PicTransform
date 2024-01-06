@@ -19,9 +19,8 @@ from PIL import ImageFilter
 def aufloesung (image_path, breite, hoehe, preview=True):
     try:
         im = Image.open(image_path)
-        print("Test")
         resized_img = im.resize([hoehe, breite])
-        print("Test2")
+        
         #Das manipulierte Bild wird angezeigt.
         if preview:
             resized_img.show()
