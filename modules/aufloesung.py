@@ -1,4 +1,4 @@
-#Auflösung anpassen
+# Auflösung anpassen
 
 '''
 Beschreibung der Funktion:
@@ -9,19 +9,23 @@ Vergleiche folgende Quellen anhand derer der Code implementiert wurde:
     
 '''
     
-#Import des Image-Moduls der Bibliothek Pillow
+# Import des Image-Moduls der Bibliothek Pillow
 from PIL import Image
 
-#Import des ImageFilter-Moduls der Bibliothek Pillow
-from PIL import ImageFilter
-
-# Der Funktion werden ein Dateipfad zum Bild sowie die gewünschte neue Auflösung (bestehtend aus Höhe und Breite) übergeben.
-def aufloesung (image_path, breite, hoehe, preview=True):
+# Die Funktion "aufloesung" ändert die Auflösung eines importierten Bildes.
+# Parameter:
+# - image_path: Der Dateipfad zum Bild, dessen Auflösung geändert werden soll.
+# - breite: Die neue Breite des Bildes.
+# - hoehe: Die neue Höhe des Bildes.
+# - preview: Gibt an, ob eine Vorschau des veränderten Bildes angezeigt werden soll (Standardwert ist True).
+def aufloesung(image_path, breite, hoehe, preview=True):
     try:
+        # Öffnet das Bild mit Pillow und ändert seine Auflösung.
         im = Image.open(image_path)
         resized_img = im.resize([hoehe, breite])
         
-        #Das manipulierte Bild wird angezeigt.
+        # Es wird entweder eine Vorschau des bearbeiteten Bildes angezeigt und eine entsprechende Meldung zurückgegeben, 
+        # oder das bearbeitete Bild wird gespeichert.
         if preview:
             resized_img.show()
             return "Aufloesung preview getriggered"
@@ -30,4 +34,5 @@ def aufloesung (image_path, breite, hoehe, preview=True):
             return image_path + " Auflösung geändert auf Breite:" + str(breite) + " und Höhe: " + str(hoehe) + "."
 
     except ValueError:
-            print("Es ist ein Fehler aufgetreten. Die Werte müssen über 0 liegen.")
+        # Gibt eine Fehlermeldung aus, wenn ungültige Werte für Breite oder Höhe angegeben werden.
+        print("Es ist ein Fehler aufgetreten. Die Werte müssen über 0 liegen.")
