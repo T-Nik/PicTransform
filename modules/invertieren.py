@@ -40,5 +40,4 @@ def invert_image(image_path, output_path, preview=False):
         # Falls ein Fehler auftritt, gibt eine Fehlermeldung aus.
         print(f"Fehler bei der Invertierung des Bildes: {e}")
 
-# Beispiel für die Verwendung der Funktion
-# invert_image('path/to/input_image.jpg', 'path/to/output_image.jpg', preview=True)
+
