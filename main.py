@@ -23,20 +23,20 @@ from kivy.uix.scrollview import ScrollView
 
 
 # Imports eigener Module
-# "Drehen°"-Funktion von "Kevin"
+# Drehenfunktion in Grad
 from modules.drehen import drehen
 
-# "Weichzeichnen"-Funktion von "Johannas"
+# Weichzeichnen- und Schärfenfunktion
 from modules.weichzeichnen import weichzeichnen
 
-# "Filter"-Funktionen von Jenny
+# Filterfunktionen 
 import modules.filter as filter
 from modules.filter import Filter_Presets
 
-# "Objekt Erkennung"-Funktionen von "Niklas M."
+# Objekterkennungsfunktionen
 from modules.objectDetection import object_detection
 
-# "Meta Daten"-Funktion von "Niklas T."
+# Metadatenfunktion
 from modules.meta_data.ImageMetaData_Module import ImageMetaData
 
 #endregion Imports
