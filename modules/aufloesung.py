@@ -31,5 +31,3 @@ def aufloesung (image_path, breite, hoehe, preview=True):
 
     except ValueError:
             print("Es ist ein Fehler aufgetreten. Die Werte müssen über 0 liegen.")
-
-#aufloesung(r"G:\Downloads\test.jpg",600,9000, True)
