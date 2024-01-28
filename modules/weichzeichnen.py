@@ -1,51 +1,57 @@
-#Weichzeichnen oder Schärfen
 '''
 Beschreibung der Funktion:
-Mit dieser Funktion kann ein Bild durch einen Weichzeichner mit einer Unschärfe versehen werden oder geschärft werden.
-In der Weichzeichnenfunktion wird auf den linearen Filter "BloxBlur" und in der Schärfenfunktion auf die Funktion "UnsharpMask" zurückgegriffen.
+Diese Funktion ermöglicht das Weichzeichnen oder Schärfen eines Bildes durch Anwendung eines Box- oder Unsharp-Mask-Filters.
+Die Funktion verwendet die Pillow-Bibliothek und die Module Image und ImageFilter für die Bildmanipulation.
 
 Vergleiche folgende Quellen anhand derer der Code implementiert wurde:
     Modul Image: https://pillow.readthedocs.io/en/stable/reference/Image.html
     Modul ImageFilter: https://pillow.readthedocs.io/en/stable/reference/ImageFilter.html
 '''
 
-#Import des Image-Moduls der Bibliothek Pillow
+# Import des Image-Moduls der Bibliothek Pillow
 from PIL import Image
 
-#Import des ImageFilter-Moduls der Bibliothek Pillow
+# Import des ImageFilter-Moduls der Bibliothek Pillow
 from PIL import ImageFilter
 
-# Der Funktion werden ein Dateipfad zum Bild sowie der gewünschte Radius übergeben.
+# Die Funktion erhält einen Dateipfad zum Bild sowie den gewünschten Radius.
 def weichzeichnen(image_path, radius, preview=True):
     try:
-        #Das Bild, mit dessen Dateipfad die Funktion aufgerufen wurde, wird in die Variable "im" gespeichert.
+        # Das Bild, mit dessen Dateipfad die Funktion aufgerufen wurde, wird in die Variable "im" gespeichert.
         im = Image.open(image_path)
 
-        #Prüfung, ob das Bild mit einer Unschärfe versehen werden soll oder geschärft werden soll.        
+        # Prüfung, ob das Bild mit einer Unschärfe versehen oder geschärft werden soll.
         if radius < 0 and radius > -100:
-            #Die Funktion BoxBlur kann nur mit positiven Zahlen arbeiten, daher wird der Radius in eine positive Zahl gewandelt.
-            radius = radius*-1
+            # Die Funktion BoxBlur kann nur mit positiven Zahlen arbeiten, daher wird der Radius in eine positive Zahl gewandelt.
+            radius = radius * -1
 
-            #Das Bild wird mit dem eingegebenen Radius weichgezeichnet
+            # Das Bild wird mit dem eingegebenen Radius weichgezeichnet.
+            # Jedes Pixel im Bild wird durch einen gewichteten Durchschnitt seiner Nachbarpixel ersetzt. 
+            # Der Parameter radius in ImageFilter.BoxBlur(radius) gibt an, wie weit der Weichzeichnungseffekt in das Bild hineinreichen soll.
             blured_img = im.filter(ImageFilter.BoxBlur(radius))           
 
-        #zweite Prüfung, bei einem Radius zwischen 0 und 100 soll das Bild geschärft werden.
-        elif radius > 0 and radius <100:
-            #Das Bild wird mit dem eingegebenen Radius geschärft
+        # Zweite Prüfung, bei einem Radius zwischen 0 und 100 soll das Bild geschärft werden.
+        elif radius > 0 and radius < 100:
+            # Das Bild wird mit dem eingegebenen Radius geschärft.
+            # Die Unscharfmaskierung wirkt, indem sie einen gewichteten Unterschied zwischen den Pixeln und ihren benachbarten Pixeln berechnet und diesen auf das Originalbild addiert. 
+            # Dieser Prozess hebt die Kanten im Bild hervor und erzeugt den Eindruck von Schärfe.
             blured_img = im.filter(ImageFilter.UnsharpMask(radius))
 
-        #fängt mögliche Eingaben für einen Radius ab, mit denen die Funktion nicht umgehen kann
+        # Fängt mögliche Eingaben für einen Radius ab, mit denen die Funktion nicht umgehen kann.
         else:
             print("Der Radius muss zwischen -100 und +100 liegen und darf nicht 0 sein.")
             return
 
-            #Das manipulierte Bild wird angezeigt.
+
+        # Es wird entweder eine Vorschau des bearbeiteten Bildes angezeigt und eine entsprechende Meldung zurückgegeben, 
+        # oder das bearbeitete Bild wird gespeichert, und eine Erfolgsmeldung mit dem Pfad und dem Radius wird zurückgegeben.
         if preview:
             blured_img.show()
-            return "Weichzeichnen preview getriggered"
+            return "Weichzeichnen-Vorschau ausgelöst"
         else:
             blured_img.save(image_path)
             return image_path + " weichgezeichnet mit einem Radius von " + str(radius) + " Pixeln."
          
-    except:
-        print("Es ist ein Fehler aufgetreten.")
+    except Exception as e:
+        # Fängt allgemeine Ausnahmen ab und gibt eine Fehlermeldung aus.
+        print(f"Es ist ein Fehler aufgetreten: {e}")
