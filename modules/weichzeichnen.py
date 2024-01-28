@@ -1,3 +1,10 @@
+# Import des Image-Moduls der Bibliothek Pillow
+from PIL import Image
+
+# Import des ImageFilter-Moduls der Bibliothek Pillow
+from PIL import ImageFilter
+
+
 '''
 Beschreibung der Funktion:
 Diese Funktion ermöglicht das Weichzeichnen oder Schärfen eines Bildes durch Anwendung eines Box- oder Unsharp-Mask-Filters.
