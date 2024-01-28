@@ -7,11 +7,25 @@ from PIL import Image, ImageEnhance
 # - preview: Gibt an, ob eine Vorschau des bearbeiteten Bildes angezeigt werden soll (Standardwert ist True).
 def saettigung(image_path, saturation_factor=1.0, preview=True):
     try:
+        # Parameter-Validierung
+        if not isinstance(image_path, str):
+            raise TypeError("Der Dateipfad zum Bild muss eine Zeichenkette (String) sein.")
+        
+        if not isinstance(saturation_factor, (int, float)):
+            raise TypeError("Der Sättigungsfaktor muss eine Zahl sein.")
+        
+        if not isinstance(preview, bool):
+            raise TypeError("Der Vorschau-Parameter muss ein boolscher Wert sein.")
+
+        # Sinnvoller Input-Check
+        if saturation_factor < 0 or saturation_factor > 2:
+            raise ValueError("Der Sättigungsfaktor muss im Bereich von 0 bis 2 liegen.")
+
         # Öffnet das Bild mit dem angegebenen Dateipfad.
         img = Image.open(image_path)
-    except:
-        # Falls ein Fehler beim Öffnen des Bildes auftritt, gibt eine Fehlermeldung aus und beendet die Funktion.
-        print("Fehler beim Öffnen des Bildes")
+    except Exception as e:
+        # Falls ein Fehler beim Öffnen des Bildes oder bei der Validierung auftritt, gibt eine Fehlermeldung aus und beendet die Funktion.
+        print(f"Fehler beim Öffnen des Bildes oder ungültige Parameter: {e}")
         return
 
     # Ändert die Sättigung des Bildes gemäß dem angegebenen Faktor.
