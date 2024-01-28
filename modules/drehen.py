@@ -8,6 +8,14 @@ from PIL import Image
 def drehen(image_path, degrees, preview=True):
     
     try:
+        # Parameter-Validierung
+        if not isinstance(image_path, str):
+            raise TypeError("Ungültiger Parameter. 'image_path' muss ein String sein.")
+        if not isinstance(degrees, (int, float)):
+            raise TypeError("Ungültiger Parameter. 'degrees' muss eine Zahl sein.")
+        if not isinstance(preview, bool):
+            raise TypeError("Ungültiger Parameter. 'preview' muss ein Boolean-Wert sein.")
+        
         # Öffnet das Bild mit Pillow und dreht es um den angegebenen Grad.
         img = Image.open(image_path)
         rotated_img = img.rotate(degrees, expand=False)
