@@ -8,15 +8,19 @@ Vergleiche folgende Quellen anhand derer der Code implementiert wurde:
     Modul ImageFilter: https://pillow.readthedocs.io/en/stable/reference/ImageFilter.html
 '''
 
-# Import des Image-Moduls der Bibliothek Pillow
-from PIL import Image
-
-# Import des ImageFilter-Moduls der Bibliothek Pillow
-from PIL import ImageFilter
-
 # Die Funktion erhält einen Dateipfad zum Bild sowie den gewünschten Radius.
 def weichzeichnen(image_path, radius, preview=True):
     try:
+        # Parameter-Validierung
+        if not isinstance(image_path, str):
+            raise TypeError("Der Dateipfad zum Bild muss eine Zeichenkette (String) sein.")
+        
+        if not isinstance(radius, (int, float)):
+            raise TypeError("Der Radius muss eine Zahl sein.")
+        
+        if not isinstance(preview, bool):
+            raise TypeError("Der Vorschau-Parameter muss ein boolscher Wert sein.")
+        
         # Das Bild, mit dessen Dateipfad die Funktion aufgerufen wurde, wird in die Variable "im" gespeichert.
         im = Image.open(image_path)
 
@@ -41,7 +45,6 @@ def weichzeichnen(image_path, radius, preview=True):
         else:
             print("Der Radius muss zwischen -100 und +100 liegen und darf nicht 0 sein.")
             return
-
 
         # Es wird entweder eine Vorschau des bearbeiteten Bildes angezeigt und eine entsprechende Meldung zurückgegeben, 
         # oder das bearbeitete Bild wird gespeichert, und eine Erfolgsmeldung mit dem Pfad und dem Radius wird zurückgegeben.
