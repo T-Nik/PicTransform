@@ -18,7 +18,7 @@ def saettigung(image_path, saturation_factor=1.0, preview=True):
     enhanced_img = ImageEnhance.Color(img).enhance(saturation_factor)
 
     # Es wird entweder eine Vorschau des bearbeiteten Bildes angezeigt und eine entsprechende Meldung zurückgegeben, 
-    # oder das bearbeitete Bild wird gespeichert, und eine Erfolgsmeldung mit dem Pfad und dem Radius wird zurückgegeben.
+    # oder das bearbeitete Bild wird gespeichert.
     if preview:
         print("Sättigung Preview getriggert")
         enhanced_img.show()

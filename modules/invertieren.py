@@ -20,7 +20,7 @@ def invert_image(image_path, output_path, preview=False):
     inverted_img = Image.fromarray(image_array)
 
     # Es wird entweder eine Vorschau des bearbeiteten Bildes angezeigt und eine entsprechende Meldung zurückgegeben, 
-    # oder das bearbeitete Bild wird gespeichert, und eine Erfolgsmeldung mit dem Pfad und dem Radius wird zurückgegeben.
+    # oder das bearbeitete Bild wird gespeichert.
     if preview:
         print("Invertierung ausgelöst")
         inverted_img.show()
