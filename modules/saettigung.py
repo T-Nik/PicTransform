@@ -20,11 +20,9 @@ def saettigung(image_path, saturation_factor=1.0, preview=True):
     # Es wird entweder eine Vorschau des bearbeiteten Bildes angezeigt und eine entsprechende Meldung zurückgegeben, 
     # oder das bearbeitete Bild wird gespeichert, und eine Erfolgsmeldung mit dem Pfad und dem Radius wird zurückgegeben.
     if preview:
-        # Wenn Vorschau gewünscht ist, gibt eine Meldung aus und zeigt die Vorschau an.
         print("Sättigung Preview getriggert")
         enhanced_img.show()
     else:
-        # Wenn Vorschau nicht gewünscht ist, gibt eine Meldung aus und speichert das bearbeitete Bild.
         print("Sättigung apply getriggert")
         enhanced_img.save(image_path)
 
