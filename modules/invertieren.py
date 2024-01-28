@@ -19,13 +19,12 @@ def invert_image(image_path, output_path, preview=False):
     # Erstellen Sie ein neues Bild mit den bearbeiteten Pixelwerten.
     inverted_img = Image.fromarray(image_array)
 
-    # Entscheidet, ob eine Vorschau des invertierten Bildes angezeigt oder das Bild gespeichert werden soll.
+    # Es wird entweder eine Vorschau des bearbeiteten Bildes angezeigt und eine entsprechende Meldung zurückgegeben, 
+    # oder das bearbeitete Bild wird gespeichert, und eine Erfolgsmeldung mit dem Pfad und dem Radius wird zurückgegeben.
     if preview:
-        # Wenn Vorschau gewünscht ist, gibt eine Meldung aus und zeigt die Vorschau an.
         print("Invertierung ausgelöst")
         inverted_img.show()
     else:
-        # Wenn Vorschau nicht gewünscht ist, gibt eine Meldung aus und speichert das invertierte Bild.
         print("Invertierung ausgelöst")
         inverted_img.save(output_path)
 
