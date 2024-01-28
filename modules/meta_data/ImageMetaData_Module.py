@@ -11,6 +11,11 @@ class ImageMetaData:
     def __init__(self, relative_filepath):
         # Initialisiert die Klasse. Jede Instanz der Klasse arbeitet mit einem spezifischen Bild, dessen Pfad hier übergeben wird.
         self.logger = logging.getLogger(___name__)  # Erstellt einen Logger speziell für diese Klasse.
+
+        # Parameter-Validierung für relative_filepath
+        if not isinstance(relative_filepath, str):
+            raise TypeError("Ungültiger Parameter. 'relative_filepath' muss ein String sein.")
+        
         self.relative_filepath = relative_filepath  # Speichert den relativen Pfad zur Bilddatei.
 
     # Öffentliche Methoden (Teil der Schnittstelle zur Außenwelt):
