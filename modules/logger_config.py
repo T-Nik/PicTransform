@@ -1,10 +1,6 @@
 import logging
 # Importiert das Logging-Modul, um ein Logging-System für die Anwendung bereitzustellen.
 
-# Die folgende Zeile ist auskommentiert. Sie würde normalerweise den Namen der Log-Datei festlegen,
-# in der die Protokolle gespeichert werden sollen. Es ist nützlich, wenn Sie die Protokolle in eine Datei
-# umleiten möchten, anstatt sie auf der Konsole auszugeben.
-#LOGGING_FILENAME = 'logfile.log'
 
 def setup_logging():
     # Definiert eine Funktion zum Einrichten der grundlegenden Konfiguration des Logging-Systems.
