@@ -12,7 +12,7 @@ Das Tool verfügt über die folgenden Funktionen, die auf ein Bild angewendet we
    8. Auflösung anpassen
 
 ## Voraussetzungen
-Betriebssystem: Windwos
+Betriebssystem: Windwos \n
 Python 3.11.0 (https://www.python.org/downloads/release/python-3110/)
 
 ## Installation
