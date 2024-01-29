@@ -1,5 +1,5 @@
 import logging
-from PicTransform.modules.logger_config import setup_logging
+from modules.logger_config import setup_logging
 
 # Konfiguriert das Logging-System für das gesamte Modul. Die Konfiguration ist in der 'logger_config' definiert.
 # Dies ermöglicht eine zentrale Verwaltung der Logging-Einstellungen.

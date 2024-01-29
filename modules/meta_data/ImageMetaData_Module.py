@@ -2,7 +2,7 @@ import logging
 from PIL import Image
 import exif
 import json
-from PicTransform.modules.ImageErrorHandling_Module import ImageErrorHandling
+from modules.ImageErrorHandling_Module import ImageErrorHandling
 
 # Konfiguration des Logging-Systems für bessere Fehlernachverfolgung
 logging.basicConfig(format='%(asctime)s %(message)s')

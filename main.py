@@ -111,7 +111,7 @@ class PicTransform(App):
 
             self.popup.dismiss() # schließt das FileChooser-Popup
 
-    # Funktion zum exportieren des Bildes
+    # Funktion zum Exportieren des Bildes
     def export_image(self):
         # Popup zum Auswählen des Speicherorts
         filechooser = FileChooserIconView(filters=['*'], dirselect=True)
