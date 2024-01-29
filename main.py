@@ -21,7 +21,6 @@ from kivy.uix.label import Label
 from kivy.uix.dropdown import DropDown
 from kivy.uix.scrollview import ScrollView
 
-
 # Imports eigener Module
 # Drehenfunktion in Grad
 from modules.drehen import drehen
@@ -54,6 +53,13 @@ def copy_file(src, dst):
     except:
         print("Fehler beim Kopieren von " + src + " nach " + dst)
         return
+    
+# Fehlermeldung im Popup-Fenster anzeigen
+def show_error_popup(message):
+    content = Label(text=message, text_size=(400, None), halign='center', valign='middle')
+    error_popup = Popup(title="Fehler", content=content, size_hint=(None, None), size=(400, 200))
+    error_popup.open()
+
 
 #endregion Helpers
 
@@ -113,6 +119,12 @@ class PicTransform(App):
 
     # Funktion zum Exportieren des Bildes
     def export_image(self):
+        if self.actualImagePath is None:
+            # Bild wurde nicht importiert, daher den Export-Button deaktivieren
+            error_message = "Es wurde kein Bild importiert. Bitte wählen Sie ein Bild aus."
+            show_error_popup(error_message)
+            return
+
         # Popup zum Auswählen des Speicherorts
         filechooser = FileChooserIconView(filters=['*'], dirselect=True)
         export_button = Button(text="Export", size_hint=(1, 0.1))
@@ -129,20 +141,13 @@ class PicTransform(App):
         self.export_popup.open()
 
     def save_export(self, instance):
-        try:
-            if self.actualImagePath is None:
-                raise ValueError("Es wurde kein Bild importiert.")
-
-            filechooser = self.export_popup.content.children[1]
-            selection = filechooser.selection
-            if selection:
-                save_path = selection[0]
-                copy_file(self.actualImagePath, os.path.join(save_path, os.path.basename(self.actualImagePath)))
-                print(f"Bild exportiert nach: {save_path}")
-                self.export_popup.dismiss()
-
-        except ValueError as e:
-            print(f"Fehler beim Exportieren des Bildes: {e}")
+        filechooser = self.export_popup.content.children[1]
+        selection = filechooser.selection
+        if selection:
+            save_path = selection[0]
+            copy_file(self.actualImagePath, os.path.join(save_path, os.path.basename(self.actualImagePath)))
+            print(f"Bild exportiert nach: {save_path}")
+            self.export_popup.dismiss()
 
     def clear_action_bar(self):
         # Entfernt alle Widgets aus der aktions_leiste
