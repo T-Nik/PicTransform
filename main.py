@@ -129,13 +129,20 @@ class PicTransform(App):
         self.export_popup.open()
 
     def save_export(self, instance):
-        filechooser = self.export_popup.content.children[1]
-        selection = filechooser.selection
-        if selection:
-            save_path = selection[0]
-            copy_file(self.actualImagePath, os.path.join(save_path, os.path.basename(self.actualImagePath)))
-            print(f"Bild exportiert nach: {save_path}")
-            self.export_popup.dismiss()
+        try:
+            if self.actualImagePath is None:
+                raise ValueError("Es wurde kein Bild importiert.")
+
+            filechooser = self.export_popup.content.children[1]
+            selection = filechooser.selection
+            if selection:
+                save_path = selection[0]
+                copy_file(self.actualImagePath, os.path.join(save_path, os.path.basename(self.actualImagePath)))
+                print(f"Bild exportiert nach: {save_path}")
+                self.export_popup.dismiss()
+
+        except ValueError as e:
+            print(f"Fehler beim Exportieren des Bildes: {e}")
 
     def clear_action_bar(self):
         # Entfernt alle Widgets aus der aktions_leiste
