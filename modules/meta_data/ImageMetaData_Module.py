@@ -10,7 +10,7 @@ logging.basicConfig(format='%(asctime)s %(message)s')
 class ImageMetaData:
     def __init__(self, relative_filepath):
         # Initialisiert die Klasse. Jede Instanz der Klasse arbeitet mit einem spezifischen Bild, dessen Pfad hier übergeben wird.
-        self.logger = logging.getLogger(___name__)  # Erstellt einen Logger speziell für diese Klasse.
+        self.logger = logging.getLogger(__name__)  # Erstellt einen Logger speziell für diese Klasse.
 
         # Parameter-Validierung für relative_filepath
         if not isinstance(relative_filepath, str):
