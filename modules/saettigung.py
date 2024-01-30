@@ -41,4 +41,4 @@ def saettigung(image_path, saturation_factor=1.0, preview=True):
         enhanced_img.save(image_path)
 
     # Gibt eine Erfolgsmeldung mit dem Pfad des bearbeiteten Bildes und dem angewendeten Sättigungsfaktor zurück.
-    return image_path + " gesättigt mit einem Faktor von " + str(saturation_factor) + " Prozent"
+    return image_path + " gesättigt mit einem Faktor von " + str(saturation_factor * 100) + " Prozent"

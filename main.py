@@ -31,6 +31,9 @@ from modules.weichzeichnen import weichzeichnen
 # Invertierenfunktion
 from modules.invertieren import invert_image
 
+# Sättigungsfunktion
+from modules.saettigung import saettigung
+
 # Filterfunktionen 
 import modules.filter as filter
 from modules.filter import Filter_Presets
@@ -277,6 +280,42 @@ class PicTransform(App):
         self.root.ids.image_widget.source = self.actualImagePath
         self.root.ids.image_widget.reload()
 #endregion "Weichzeichnen"
+
+
+#region "Sättigung"
+    def show_saturation_controls(self):
+        self.clear_action_bar()
+        
+        # Neues label hinzufügen für Stärke
+        self.saturation_label = Label(text='0%')
+        self.root.ids.aktions_leiste.add_widget(self.saturation_label)
+
+        # Slider hinzufügen
+        self.saturation_slider = Slider(min=0, max=2, value=1)
+        self.saturation_slider.bind(value=lambda instance, value: setattr(self.saturation_label, 'text', f'{int(value*100)}%'))
+        self.root.ids.aktions_leiste.add_widget(self.saturation_slider)
+
+        # "Vorschau" Button hinzufügen
+        self.preview_button = Button(text='Vorschau', on_release=self.preview_saturation, background_color=(1, 1, 1, 0.5))
+        self.root.ids.aktions_leiste.add_widget(self.preview_button)
+
+        # "Anwenden" Button hinzufügen
+        self.apply_button = Button(text='Anwenden', on_release=self.apply_saturation, background_color=(0.486, 0.988, 0, 1))
+        self.root.ids.aktions_leiste.add_widget(self.apply_button)
+        
+
+    def preview_saturation(self, callBackWidget):
+        saturation = self.saturation_slider.value
+        print(saettigung(self.actualImagePath, saturation_factor=saturation, preview=True))
+
+    def apply_saturation(self, callBackWidget):
+        radius = self.saturation_slider.value
+        # Nachkommastellen enfternen
+        radius = int(radius)
+        print(saettigung(self.actualImagePath, radius, preview=False))
+        self.root.ids.image_widget.source = self.actualImagePath
+        self.root.ids.image_widget.reload()
+#endregion "Sättigung"
 
 
 #region "Invertieren"
