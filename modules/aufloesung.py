@@ -11,7 +11,6 @@ Vergleiche folgende Quellen anhand derer der Code implementiert wurde:
     
 # Import des Image-Moduls der Bibliothek Pillow
 from PIL import Image
-from PicTransform.modules.ImageErrorHandling_Module import ImageErrorHandling
 
 
 # Die Funktion "aufloesung" ändert die Auflösung eines importierten Bildes.

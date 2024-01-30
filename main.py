@@ -20,6 +20,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.dropdown import DropDown
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.textinput import TextInput
 
 # Imports eigener Module
 # Drehenfunktion in Grad
@@ -33,6 +34,9 @@ from modules.invertieren import invert_image
 
 # Sättigungsfunktion
 from modules.saettigung import saettigung
+
+# Auflösungsfunktion
+from modules.aufloesung import aufloesung
 
 # Filterfunktionen 
 import modules.filter as filter
@@ -338,7 +342,53 @@ class PicTransform(App):
         self.root.ids.image_widget.source = self.actualImagePath
         self.root.ids.image_widget.reload()
 #endregion "Invertieren"
-       
+
+
+#region "Auflösung"
+    def show_resolution_controls(self):
+        self.clear_action_bar()
+
+        # Inputbox für Breite hinzufügen
+        self.width_input = TextInput(text='0', multiline=False, input_filter='int', size_hint_x=None, width=100, size_hint_y=0.5)
+        # zentrieren
+        self.width_input.pos_hint = {"center_x": 0.5, "center_y": 0.5}
+        self.root.ids.aktions_leiste.add_widget(self.width_input)
+
+        # Label mit "X" zwischen den beiden Inputboxen hinzufügen
+        self.x_label = Label(text='X', size_hint_x=None, width=50)
+        self.root.ids.aktions_leiste.add_widget(self.x_label)
+
+        # Inputbox für Höhe hinzufügen
+        self.height_input = TextInput(text='0', multiline=False, input_filter='int', size_hint_x=None, width=100, size_hint_y=0.5)
+        # zentrieren
+        self.height_input.pos_hint = {"center_x": 0.5, "center_y": 0.5}
+        self.root.ids.aktions_leiste.add_widget(self.height_input)
+
+        # "Vorschau" Button hinzufügen
+        self.preview_button = Button(text='Vorschau', on_release=self.preview_resolution, background_color=(1, 1, 1, 0.5))
+        self.root.ids.aktions_leiste.add_widget(self.preview_button)
+
+        # "Anwenden" Button hinzufügen
+        self.apply_button = Button(text='Anwenden', on_release=self.apply_resolution, background_color=(0.486, 0.988, 0, 1))
+        self.root.ids.aktions_leiste.add_widget(self.apply_button)        
+
+    def preview_resolution(self, callBackWidget):
+        # breite und höhe auslesen
+        width = int(self.width_input.text)
+        height = int(self.height_input.text)
+        print("Resolution Preview mit: " + str(width) + "x" + str(height))
+        print(aufloesung(self.actualImagePath, breite=width, hoehe=height, preview=True))
+
+    def apply_resolution(self, callBackWidget):
+        # breite und höhe auslesen
+        width = int(self.width_input.text)
+        height = int(self.height_input.text)
+        print("Resolution Apply mit: " + str(width) + "x" + str(height))
+        print(aufloesung(self.actualImagePath, breite=width, hoehe=height, preview=False))
+        self.root.ids.image_widget.source = self.actualImagePath
+        self.root.ids.image_widget.reload()
+#endregion "Auflösung"
+ 
 
 #region "Objekt Erkennung"
     def show_objectDetection_controls(self):
