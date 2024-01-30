@@ -381,17 +381,22 @@ class PicTransform(App):
         self.meta_data_popup.dismiss()
 
     def print_exif_data(self, callBackWidget):
+
+        print(f"Exif-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}\n")
         meta_data = ImageMetaData(self.actualImagePath)
         exif_data = meta_data.get_exif_values()
 
-        print(f"Exif-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}\n")
         print("--------------------------------------------------------")
-        if not exif_data or not isinstance(exif_data, dict):
+        if not exif_data:
             print("Keine Exif-Daten gefunden!")
         else:
             for key, value in exif_data.items():
                 print(f"{key}: {value}")
         print("--------------------------------------------------------")
+
+        # Erstellt Buttons um Meta-Daten zu löschen oder Popup zu schließen
+        button_close = Button(text="Schließen", size_hint=(0.25, 0.15), on_release=self.dismiss_popup)
+        # button_close.pos_hint = {"center_x": 0.5, "center_y": 0.05}
 
         # Erstellt ein Label, um die Metadaten in einer Tabelle anzuzeigen
         label = Label()
@@ -407,15 +412,11 @@ class PicTransform(App):
         label.text_size = (600, None)  # Setzt die Breite für den Textumbruch, Höhe ist unbegrenzt
         label.halign = "center"
 
-        # Erstellt Buttons um Meta-Daten zu löschen oder Popup zu schließen
-        button_close = Button(text="Schließen", size_hint=(0.25, 0.15), on_release=self.dismiss_popup)
-        button_close.pos_hint = {"center_x": 0.5, "center_y": 0.5}
-
         # BoxLayout mit vertikaler Ausrichtung
         box_layout = BoxLayout(orientation='vertical', size_hint_y=None, height=600)
         # Füge das Label und den Button zur BoxLayout hinzu
-        box_layout.add_widget(label)     
         box_layout.add_widget(button_close)
+        box_layout.add_widget(label)
 
         # Erstelle die ScrollView mit dem BoxLayout als Inhalt
         scroll_view = ScrollView(size_hint=(1, 1))

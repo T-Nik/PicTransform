@@ -34,7 +34,7 @@ class ImageMetaData:
         # Bietet eine öffentliche Methode, um EXIF-Informationen des Bildes zu extrahieren.
         if self.__exif_supported_format() and self.__has_exif():
             try:
-                return json.loads(json.dumps(self.__get_exif_attributes_and_values_of_image()))
+                return self.__get_exif_attributes_and_values_of_image()
             except (TypeError, ValueError):
                 return []
         else:
@@ -83,13 +83,13 @@ class ImageMetaData:
         # Interne Methode zum Abrufen von EXIF-Attributen und deren Werten.
         self.logger.info("method: __get_exif_attributes_and_values_of_image")
         if not self.__exif_supported_format():
-            return []
+            return ["Kein EXIF unterstütztes Format!"]
         try:
             with open(self.relative_filepath, 'rb') as image_file:
                 image = exif.Image(image_file)
                 exif_properties = image.get_all()
                 self.logger.info(f"__get_exif_attributes_and_values_of_image: relative_filepath: {self.relative_filepath}")
-                self.logger.info(f"__get_exif_attributes_and_values_of_image: basic_properties: {exif_properties}")
+                self.logger.info(f"__get_exif_attributes_and_values_of_image: exif_properties: {exif_properties}")
                 return exif_properties
         except Exception as error:
             ImageErrorHandling.handle_error(self.logger, error, self.relative_filepath)
