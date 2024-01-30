@@ -28,6 +28,9 @@ from modules.drehen import drehen
 # Weichzeichnen- und Schärfenfunktion
 from modules.weichzeichnen import weichzeichnen
 
+# Invertierenfunktion
+from modules.invertieren import invert_image
+
 # Filterfunktionen 
 import modules.filter as filter
 from modules.filter import Filter_Presets
@@ -274,7 +277,29 @@ class PicTransform(App):
         self.root.ids.image_widget.source = self.actualImagePath
         self.root.ids.image_widget.reload()
 #endregion "Weichzeichnen"
-        
+
+
+#region "Invertieren"
+    def show_invert_controls(self):
+        self.clear_action_bar()
+
+        # "Vorschau" Button hinzufügen
+        self.preview_button = Button(text='Vorschau', on_release=self.preview_invert, background_color=(1, 1, 1, 0.5))
+        self.root.ids.aktions_leiste.add_widget(self.preview_button)
+
+        # "Anwenden" Button hinzufügen
+        self.apply_button = Button(text='Anwenden', on_release=self.apply_invert, background_color=(0.486, 0.988, 0, 1))
+        self.root.ids.aktions_leiste.add_widget(self.apply_button)        
+
+    def preview_invert(self, callBackWidget):
+        print(invert_image(self.actualImagePath, preview=True))
+
+    def apply_invert(self, callBackWidget):
+        print(invert_image(self.actualImagePath, preview=False))
+        self.root.ids.image_widget.source = self.actualImagePath
+        self.root.ids.image_widget.reload()
+#endregion "Invertieren"
+       
 
 #region "Objekt Erkennung"
     def show_objectDetection_controls(self):

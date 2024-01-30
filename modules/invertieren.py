@@ -6,10 +6,10 @@ import numpy as np
 # - image_path: Der Dateipfad zum Bild, das invertiert werden soll.
 # - output_path: Der Dateipfad für die Speicherung des invertierten Bildes.
 # - preview: Gibt an, ob eine Vorschau des invertierten Bildes angezeigt werden soll (Standardwert ist False).
-def invert_image(image_path, output_path, preview=False):
+def invert_image(image_path, preview=False):
     try:
         # Parameter-Validierung
-        if not isinstance(image_path, str) or not isinstance(output_path, str) or not isinstance(preview, bool):
+        if not isinstance(image_path, str) or not isinstance(preview, bool):
             raise TypeError("Ungültige Parameter. 'image_path' und 'output_path' müssen Zeichenketten (Strings) sein, 'preview' muss ein boolescher Wert sein.")
 
         # Öffnen Sie das Bild mit Pillow.
@@ -31,13 +31,11 @@ def invert_image(image_path, output_path, preview=False):
             inverted_img.show()
         else:
             print("Invertierung apply ausgelöst")
-            inverted_img.save(output_path)
+            inverted_img.save(image_path)
 
         # Gibt den Dateipfad des invertierten Bildes zurück.
-        return output_path
+        return image_path + " invertiert."
 
     except Exception as e:
         # Falls ein Fehler auftritt, gibt eine Fehlermeldung aus.
         print(f"Fehler bei der Invertierung des Bildes: {e}")
-
-
