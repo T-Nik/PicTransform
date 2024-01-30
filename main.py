@@ -247,7 +247,7 @@ class PicTransform(App):
         self.root.ids.aktions_leiste.add_widget(self.degree_label)
 
         # Slider hinzufügen
-        self.blur_slider = Slider(min=0, max=100, value=0)
+        self.blur_slider = Slider(min=-100, max=100, value=0)
         self.blur_slider.bind(value=lambda instance, value: setattr(self.degree_label, 'text', f'{int(value)}%'))
         self.root.ids.aktions_leiste.add_widget(self.blur_slider)
 
