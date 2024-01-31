@@ -9,6 +9,9 @@ from kivy.config import Config
 Config.set('graphics', 'width', '1366')
 Config.set('graphics', 'height', '768')
 
+# Rote Demo Kreise von Kivy Debug verhindern:
+Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
+
 # Imports für Image Import
 import os
 from kivy.uix.popup import Popup
@@ -160,7 +163,6 @@ class PicTransform(App):
     def clear_action_bar(self):
         # Entfernt alle Widgets aus der aktions_leiste
         self.root.ids.aktions_leiste.clear_widgets()
-
 
 #region "Filter"
     def show_filter_controls(self):
