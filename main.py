@@ -23,6 +23,10 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 
 # Imports eigener Module
+
+# Fehlermeldung im Pop-Up Fenster anzeigen
+from modules.fehler_popup import show_error_popup
+
 # Drehenfunktion in Grad
 from modules.drehen import drehen
 
@@ -63,13 +67,7 @@ def copy_file(src, dst):
     except:
         print("Fehler beim Kopieren von " + src + " nach " + dst)
         return
-    
-# Fehlermeldung im Popup-Fenster anzeigen
-def show_error_popup(message):
-    content = Label(text=message, text_size=(400, None), halign='center', valign='middle')
-    error_popup = Popup(title="Fehler", content=content, size_hint=(None, None), size=(400, 200))
-    error_popup.open()
-
+   
 
 #endregion Helpers
 
@@ -199,12 +197,24 @@ class PicTransform(App):
 
 
     def preview_filter(self, callBackWidget):
-        Filter_Presets.filter_dict[self.drop_down_button.text].apply_config(self.actualImagePath, preview=True)
+        try:
+            if self.actualImagePath is not None:
+                Filter_Presets.filter_dict[self.drop_down_button.text].apply_config(self.actualImagePath, preview=True)
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Anzeigen der Filtervorschau: {e}")
 
     def apply_filter(self, callBackWidget):
-        Filter_Presets.filter_dict[self.drop_down_button.text].apply_config(self.actualImagePath, preview=False)
-        self.root.ids.image_widget.source = self.actualImagePath
-        self.root.ids.image_widget.reload()
+        try:
+            if self.actualImagePath is not None:
+                Filter_Presets.filter_dict[self.drop_down_button.text].apply_config(self.actualImagePath, preview=False)
+                self.root.ids.image_widget.source = self.actualImagePath
+                self.root.ids.image_widget.reload()
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Anwenden der Filter: {e}")
 #endregion "Filter"
 
 
@@ -238,13 +248,19 @@ class PicTransform(App):
         print(drehen(self.actualImagePath, degrees, preview=True))
 
     def apply_rotate(self, callBackWidget):
-        degrees = self.rotate_slider.value
-        # Nachkommastellen enfternen
-        degrees = int(degrees)
-        # von ihr aus modules/drehen.py aufrufen
-        print(drehen(self.actualImagePath, degrees, preview=False))
-        self.root.ids.image_widget.source = self.actualImagePath
-        self.root.ids.image_widget.reload()
+        try:
+            if self.actualImagePath is not None:
+                degrees = self.rotate_slider.value
+                # Nachkommastellen enfternen
+                degrees = int(degrees)
+                # von ihr aus modules/drehen.py aufrufen
+                print(drehen(self.actualImagePath, degrees, preview=False))
+                self.root.ids.image_widget.source = self.actualImagePath
+                self.root.ids.image_widget.reload()
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Anwenden des Dreheneffekts: {e}")
 #endregion "Drehen°"
 
 
@@ -269,20 +285,31 @@ class PicTransform(App):
         self.apply_button = Button(text='Anwenden', on_release=self.apply_blur, background_color=(0.486, 0.988, 0, 1))
         self.root.ids.aktions_leiste.add_widget(self.apply_button)
         
-
     def preview_blur(self, callBackWidget):
-        radius = self.blur_slider.value
-        # Nachkommastellen enfternen
-        radius = int(radius)
-        print(weichzeichnen(self.actualImagePath, radius, preview=True))
+        try:
+            radius = self.blur_slider.value
+            # Nachkommastellen entfernen
+            radius = int(radius)
+            print(weichzeichnen(self.actualImagePath, radius, preview=True))
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Anzeigen der Weichzeichnungsvorschau: {e}")
 
     def apply_blur(self, callBackWidget):
-        radius = self.blur_slider.value
-        # Nachkommastellen enfternen
-        radius = int(radius)
-        print(weichzeichnen(self.actualImagePath, radius, preview=False))
-        self.root.ids.image_widget.source = self.actualImagePath
-        self.root.ids.image_widget.reload()
+        try:
+            if self.actualImagePath is not None:
+                radius = self.blur_slider.value
+                # Nachkommastellen entfernen
+                radius = int(radius)
+                print(weichzeichnen(self.actualImagePath, radius, preview=False))
+                self.root.ids.image_widget.source = self.actualImagePath
+                self.root.ids.image_widget.reload()
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            # Bei einem Fehler zeige die Fehlermeldung im Pop-up Fenster an
+            show_error_popup(f"Fehler beim Anwenden des Weichzeichnungseffekts: {e}")
+
+
 #endregion "Weichzeichnen"
 
 
@@ -313,12 +340,19 @@ class PicTransform(App):
         print(saettigung(self.actualImagePath, saturation_factor=saturation, preview=True))
 
     def apply_saturation(self, callBackWidget):
-        radius = self.saturation_slider.value
-        # Nachkommastellen enfternen
-        radius = int(radius)
-        print(saettigung(self.actualImagePath, radius, preview=False))
-        self.root.ids.image_widget.source = self.actualImagePath
-        self.root.ids.image_widget.reload()
+        try:
+            if self.actualImagePath is not None:
+                radius = self.saturation_slider.value
+                # Nachkommastellen enfternen
+                radius = int(radius)
+                print(saettigung(self.actualImagePath, radius, preview=False))
+                self.root.ids.image_widget.source = self.actualImagePath
+                self.root.ids.image_widget.reload()
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Anwenden des Sättigungseffekts: {e}")
+
 #endregion "Sättigung"
 
 
@@ -338,9 +372,15 @@ class PicTransform(App):
         print(invert_image(self.actualImagePath, preview=True))
 
     def apply_invert(self, callBackWidget):
-        print(invert_image(self.actualImagePath, preview=False))
-        self.root.ids.image_widget.source = self.actualImagePath
-        self.root.ids.image_widget.reload()
+        try:
+            if self.actualImagePath is not None:
+                print(invert_image(self.actualImagePath, preview=False))
+                self.root.ids.image_widget.source = self.actualImagePath
+                self.root.ids.image_widget.reload()
+            else:
+                raise ValueError ("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Anwenden des Invertiereneffekts: {e}")
 #endregion "Invertieren"
 
 
@@ -380,13 +420,19 @@ class PicTransform(App):
         print(aufloesung(self.actualImagePath, breite=width, hoehe=height, preview=True))
 
     def apply_resolution(self, callBackWidget):
-        # breite und höhe auslesen
-        width = int(self.width_input.text)
-        height = int(self.height_input.text)
-        print("Resolution Apply mit: " + str(width) + "x" + str(height))
-        print(aufloesung(self.actualImagePath, breite=width, hoehe=height, preview=False))
-        self.root.ids.image_widget.source = self.actualImagePath
-        self.root.ids.image_widget.reload()
+        try:
+            # breite und höhe auslesen
+            width = int(self.width_input.text)
+            height = int(self.height_input.text)
+            print("Resolution Apply mit: " + str(width) + "x" + str(height))
+            if self.actualImagePath is not None:
+                print(aufloesung(self.actualImagePath, breite=width, hoehe=height, preview=False))
+                self.root.ids.image_widget.source = self.actualImagePath
+                self.root.ids.image_widget.reload()
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Anwenden der Auflösung.")
 #endregion "Auflösung"
  
 
@@ -418,7 +464,7 @@ class PicTransform(App):
         self.root.ids.aktions_leiste.add_widget(scroll_view)
 
         # "Vorschau" Button hinzufügen
-        self.preview_button = Button(text='Life Kamera\n(braucht ein paar Sek. zum Laden)', on_release=self.preview_objectDetection, background_color=(1, 1, 1, 0.5))
+        self.preview_button = Button(text='Live Kamera\n(braucht ein paar Sek. zum Laden)', on_release=self.preview_objectDetection, background_color=(1, 1, 1, 0.5))
         self.root.ids.aktions_leiste.add_widget(self.preview_button)
 
         # "Anwenden" Button hinzufügen
@@ -430,9 +476,15 @@ class PicTransform(App):
         object_detection()
 
     def apply_objectDetection(self, callBackWidget):
-        object_detection(self.actualImagePath)
-        self.root.ids.image_widget.source = self.actualImagePath
-        self.root.ids.image_widget.reload()
+        try:
+            if self.actualImagePath is not None:
+                object_detection(self.actualImagePath)
+                self.root.ids.image_widget.source = self.actualImagePath
+                self.root.ids.image_widget.reload()
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Anwenden der Objekterkennung: {e}")
 #endregion "Objekt Erkennung"
         
 
@@ -454,95 +506,114 @@ class PicTransform(App):
         self.root.ids.aktions_leiste.add_widget(self.remove_meta_data_button)
     
     def print_basic_properties(self, callBackWidget):
-        meta_data = ImageMetaData(self.actualImagePath)
-        basic_properties = meta_data.get_basic_properties()
+        try:
+            if self.actualImagePath is not None:
+                meta_data = ImageMetaData(self.actualImagePath)
+                basic_properties = meta_data.get_basic_properties()
 
-        print(f"Basic Properties für das Bild: {os.path.basename(self.actualImagePath)}\n")
-        print("--------------------------------------------------------")
-        # durch das tuple basic_properties iterieren
-        for i in range(len(basic_properties)):
-            print(f"{basic_properties[i]}")
-        print("--------------------------------------------------------")
+                print(f"Basic Properties für das Bild: {os.path.basename(self.actualImagePath)}\n")
+                print("--------------------------------------------------------")
+                # durch das tuple basic_properties iterieren
+                for i in range(len(basic_properties)):
+                    print(f"{basic_properties[i]}")
+                print("--------------------------------------------------------")
+            
+                # Erstellt ein Label, um die Metadaten in einer Tabelle anzuzeigen
+                label = Label()
+                label.text += "--------------------------------------------------------\n"
+                for i in range(len(basic_properties)):
+                    label.text += f"{basic_properties[i]}\n"
+                label.text += "--------------------------------------------------------\n"
+                label.text_size = (600, None) # Setzt die Breite für den Textumbruch, Höhe ist unbegrenzt
+                label.halign = "center"
 
-        # Erstellt ein Label, um die Metadaten in einer Tabelle anzuzeigen
-        label = Label()
-        label.text += "--------------------------------------------------------\n"
-        for i in range(len(basic_properties)):
-            label.text += f"{basic_properties[i]}\n"
-        label.text += "--------------------------------------------------------\n"
-        label.text_size = (600, None) # Setzt die Breite für den Textumbruch, Höhe ist unbegrenzt
-        label.halign = "center"
+                # Erstellt Buttons um Meta-Daten zu löschen oder Popup zu schließen
+                button_close = Button(text="Schließen", size_hint=(0.25, 0.15), on_release=self.dismiss_popup)
+                button_close.pos_hint = {"center_x": 0.5, "center_y": 0.5}
 
-        # Erstellt Buttons um Meta-Daten zu löschen oder Popup zu schließen
-        button_close = Button(text="Schließen", size_hint=(0.25, 0.15), on_release=self.dismiss_popup)
-        button_close.pos_hint = {"center_x": 0.5, "center_y": 0.5}
+                # BoxLayout mit vertikaler Ausrichtung
+                box_layout = BoxLayout(orientation='vertical', size_hint_y=None, height=600)
+                # Füge das Label und den Button zur BoxLayout hinzu
+                box_layout.add_widget(label)     
+                box_layout.add_widget(button_close)
 
-        # BoxLayout mit vertikaler Ausrichtung
-        box_layout = BoxLayout(orientation='vertical', size_hint_y=None, height=600)
-        # Füge das Label und den Button zur BoxLayout hinzu
-        box_layout.add_widget(label)     
-        box_layout.add_widget(button_close)
-
-        # Erstelle die ScrollView mit dem BoxLayout als Inhalt
-        scroll_view = ScrollView(size_hint=(1, 1))
-        scroll_view.add_widget(box_layout)
-    
-        # Create the Popup with the ScrollView as its content
-        self.meta_data_popup = Popup(title=f"Basic-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}", content=scroll_view, size_hint=(0.6, 0.8))
-        self.meta_data_popup.open()
+                # Erstelle die ScrollView mit dem BoxLayout als Inhalt
+                scroll_view = ScrollView(size_hint=(1, 1))
+                scroll_view.add_widget(box_layout)
+            
+                # Create the Popup with the ScrollView as its content
+                self.meta_data_popup = Popup(title=f"Basic-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}", content=scroll_view, size_hint=(0.6, 0.8))
+                self.meta_data_popup.open()
+            
+            # Fehlerbehandlung, falls kein Bild importiert wurde.
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Ausgeben der Metadaten: {e}")
     
     def dismiss_popup(self, instance):
         self.meta_data_popup.dismiss()
 
     def print_exif_data(self, callBackWidget):
+        try:
+            if self.actualImagePath is not None:
+                print(f"Exif-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}\n")
+                meta_data = ImageMetaData(self.actualImagePath)
+                exif_data = meta_data.get_exif_values()
 
-        print(f"Exif-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}\n")
-        meta_data = ImageMetaData(self.actualImagePath)
-        exif_data = meta_data.get_exif_values()
+                print("--------------------------------------------------------")
+                if not exif_data:
+                    print("Keine Exif-Daten gefunden!")
+                else:
+                    for key, value in exif_data.items():
+                        print(f"{key}: {value}")
+                print("--------------------------------------------------------")
 
-        print("--------------------------------------------------------")
-        if not exif_data:
-            print("Keine Exif-Daten gefunden!")
-        else:
-            for key, value in exif_data.items():
-                print(f"{key}: {value}")
-        print("--------------------------------------------------------")
+                # Erstellt Buttons um Meta-Daten zu löschen oder Popup zu schließen
+                button_close = Button(text="Schließen", size_hint=(0.25, 0.15), on_release=self.dismiss_popup)
+                # button_close.pos_hint = {"center_x": 0.5, "center_y": 0.05}
 
-        # Erstellt Buttons um Meta-Daten zu löschen oder Popup zu schließen
-        button_close = Button(text="Schließen", size_hint=(0.25, 0.15), on_release=self.dismiss_popup)
-        # button_close.pos_hint = {"center_x": 0.5, "center_y": 0.05}
+                # Erstellt ein Label, um die Metadaten in einer Tabelle anzuzeigen
+                label = Label()
+                label.text += "--------------------------------------------------------\n"
 
-        # Erstellt ein Label, um die Metadaten in einer Tabelle anzuzeigen
-        label = Label()
-        label.text += "--------------------------------------------------------\n"
+                if not exif_data or not isinstance(exif_data, dict):
+                    label.text += "Keine Exif-Daten gefunden!\n"
+                else:
+                    for key, value in exif_data.items():
+                        label.text += f"{key}: {value}\n"
 
-        if not exif_data or not isinstance(exif_data, dict):
-            label.text += "Keine Exif-Daten gefunden!\n"
-        else:
-            for key, value in exif_data.items():
-                label.text += f"{key}: {value}\n"
+                label.text += "--------------------------------------------------------\n"
+                label.text_size = (600, None)  # Setzt die Breite für den Textumbruch, Höhe ist unbegrenzt
+                label.halign = "center"
 
-        label.text += "--------------------------------------------------------\n"
-        label.text_size = (600, None)  # Setzt die Breite für den Textumbruch, Höhe ist unbegrenzt
-        label.halign = "center"
+                # BoxLayout mit vertikaler Ausrichtung
+                box_layout = BoxLayout(orientation='vertical', size_hint_y=None, height=600)
+                # Füge das Label und den Button zur BoxLayout hinzu
+                box_layout.add_widget(button_close)
+                box_layout.add_widget(label)
 
-        # BoxLayout mit vertikaler Ausrichtung
-        box_layout = BoxLayout(orientation='vertical', size_hint_y=None, height=600)
-        # Füge das Label und den Button zur BoxLayout hinzu
-        box_layout.add_widget(button_close)
-        box_layout.add_widget(label)
-
-        # Erstelle die ScrollView mit dem BoxLayout als Inhalt
-        scroll_view = ScrollView(size_hint=(1, 1))
-        scroll_view.add_widget(box_layout)
-    
-        # Create the Popup with the ScrollView as its content
-        self.meta_data_popup = Popup(title=f"Exif-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}", content=scroll_view, size_hint=(0.6, 0.8))
-        self.meta_data_popup.open()
+                # Erstelle die ScrollView mit dem BoxLayout als Inhalt
+                scroll_view = ScrollView(size_hint=(1, 1))
+                scroll_view.add_widget(box_layout)
+            
+                # Create the Popup with the ScrollView as its content
+                self.meta_data_popup = Popup(title=f"Exif-MetaDaten für das Bild: {os.path.basename(self.actualImagePath)}", content=scroll_view, size_hint=(0.6, 0.8))
+                self.meta_data_popup.open()
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Ausgeben der Exif-Metadaten: {e}")
 
     def remove_meta_data(self, callBackWidget):
-        meta_data = ImageMetaData(self.actualImagePath)
-        meta_data.delete_EXIF_metadata()
+        try:
+            if self.actualImagePath is not None:
+                meta_data = ImageMetaData(self.actualImagePath)
+                meta_data.delete_EXIF_metadata()
+            else:
+                raise ValueError("Es wurde kein Bild importiert.")
+        except ValueError as e:
+            show_error_popup(f"Fehler beim Entfernen der Exif-Metadaten: {e}")       
 
 #endregion "MetaData"
 
