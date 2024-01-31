@@ -1,3 +1,13 @@
+# Metadaten eines Bildes anzeigen und entfernen
+
+'''
+Beschreibung der Funktion:
+Mit dieser Funktion können die Basis- und die Exif-Metadaten eines importiertes Bild
+angezeigt und die Exif-Metadaten können auch entfernt werden.
+Parameter:
+    - relative_filepath: Der relative Pfad zur Bilddatei (String).
+'''
+
 import logging
 from PIL import Image
 import exif
