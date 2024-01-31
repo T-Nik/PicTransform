@@ -1,3 +1,15 @@
+# Objekterkennung
+
+'''
+Beschreibung der Funktion:
+Mit dieser Funktion können Objekte in einem importierten Bild oder
+in einem Live-Video von einer Webcam erkannt werden.
+Parameter:
+    - image_path (optional): Der Dateipfad zum Bild, auf dem die Objekterkennung durchgeführt
+      werden soll. Wenn kein Pfad angegeben wird, wird die Webcam verwendet, um
+      Live-Objekterkennung durchzuführen.
+'''
+
 import cv2
 import numpy as np
 
