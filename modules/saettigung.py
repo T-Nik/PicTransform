@@ -1,13 +1,20 @@
-from PIL import Image, ImageEnhance
+# Sättiung anpassen
 
-# Die Funktion ermöglicht die Anpassung der Sättigung eines Bildes.
-# Parameter:
-# - image_path: Der Dateipfad zum Bild, das bearbeitet werden soll.
-# - saturation_factor: Der Faktor, um den die Sättigung verändert wird (Standardwert ist 1.0, keine Änderung).
-# - preview: Gibt an, ob eine Vorschau des bearbeiteten Bildes angezeigt werden soll (Standardwert ist True).
+'''
+Beschreibung der Funktion:
+Mit dieser Funktion kann die Sättigung eines importieren Bildes angepasst werden.
+Parameter:
+    - image_path: Der Dateipfad zum Bild, dessen Sättigung angepasst werden soll (String).
+    - saturation_factor: Der Faktor, um den die Sättigung des Bildes geändert wird.
+    - preview: Gibt an, ob eine Vorschau des bearbeiteten Bildes angezeigt werden soll (Standardwert ist True und muss ein boolescher Wert sein).
+'''
+
+from PIL import Image, ImageEnhance
+#from modules.fehler_popup import show_error_popup
+
 def saettigung(image_path, saturation_factor=1.0, preview=True):
     try:
-        # Parameter-Validierung
+        # Parameter-Validierung (Unterstützung von ChatGPT)
         if not isinstance(image_path, str):
             raise TypeError("Der Dateipfad zum Bild muss eine Zeichenkette (String) sein.")
         
@@ -25,7 +32,7 @@ def saettigung(image_path, saturation_factor=1.0, preview=True):
         img = Image.open(image_path)
     except Exception as e:
         # Falls ein Fehler beim Öffnen des Bildes oder bei der Validierung auftritt, gibt eine Fehlermeldung aus und beendet die Funktion.
-        print(f"Fehler beim Öffnen des Bildes oder ungültige Parameter: {e}")
+        show_error_popup(f"Fehler beim Öffnen des Bildes oder ungültige Parameter: {e}")
         return
 
     # Ändert die Sättigung des Bildes gemäß dem angegebenen Faktor.
