@@ -10,7 +10,7 @@ Parameter:
 '''
 
 from PIL import Image, ImageEnhance
-#from modules.fehler_popup import show_error_popup
+from modules.fehler_popup import show_error_popup
 
 def saettigung(image_path, saturation_factor=1.0, preview=True):
     try:

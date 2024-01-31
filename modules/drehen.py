@@ -12,7 +12,7 @@ Die Parameter-Validierung wurde mit Unterstützung von ChatGPT implementiert.
 '''
 
 from PIL import Image
-#from modules.fehler_popup import show_error_popup
+from modules.fehler_popup import show_error_popup
 
 def drehen(image_path, degrees, preview=True):
     

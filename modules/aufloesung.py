@@ -17,7 +17,7 @@ Die Parameter-Validierung wurde mit Unterstützung von ChatGPT implementiert.
     
 # Import des Image-Moduls der Bibliothek Pillow
 from PIL import Image
-#from modules.fehler_popup import show_error_popup
+from modules.fehler_popup import show_error_popup
 
 def aufloesung(image_path, breite, hoehe, preview=True):
     try:
