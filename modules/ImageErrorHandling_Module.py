@@ -1,3 +1,17 @@
+# Logging-System
+
+'''
+Beschreibung der Funktion:
+Mit dieser Funktion wird eine Klasse für ein Logging-System für die Fehlerbehandlung implementiert.
+Parameter:
+    - logger: Ein Logger-Objekt, das für das Logging von Fehlermeldungen verwendet wird (muss
+      ein Objekt der Klasse logging.Logger sein).
+    - error: Das aufgetretene Fehlerobjekt, das von der Bildverarbeitung generiert wurde.
+    - relative_image_path: Der relative Pfad zum importierten Bild (String).
+
+Die Parameter-Validierung wurde mit Unterstützung von ChatGPT implementiert.
+'''
+
 import logging
 from modules.logger_config import setup_logging
 
@@ -12,7 +26,7 @@ class ImageErrorHandling:
     @staticmethod
     def handle_error(logger, error, relative_image_path):
         try:
-            # Parameter-Validierung
+            # Parameter-Validierung (Unterstützung von ChatGPT)
             if not isinstance(logger, logging.Logger):
                 raise TypeError("Ungültiger Parameter. 'logger' muss ein Logger-Objekt sein.")
             if not isinstance(relative_image_path, str):
