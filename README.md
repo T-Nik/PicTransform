@@ -11,6 +11,8 @@ Das Tool verfügt über die folgenden Funktionen, die auf ein Bild angewendet we
    7. Sättigung
    8. Weichzeichnen oder Schärfen
 
+Link zu Github: https://github.com/T-Nik/PicTransform.git
+
 ## Voraussetzungen
 Betriebssystem: Windows <p>
 Python 3.11.0 (https://www.python.org/downloads/release/python-3110/)
