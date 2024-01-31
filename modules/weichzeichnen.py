@@ -1,33 +1,43 @@
+# Weichzeichnen oder Schärfen
+
+'''
+Beschreibung der Funktion:
+Mit dieser Funktion kann ein importiertes Bild durch eine Unscharfmaskierung geschärft oder
+durch Weichzeichnungseffekte weichgezeichnet werden.
+Parameter:
+    - image_path: Der Dateipfad zum Bild, auf dem der Weichzeichnungseffekt oder die
+      Unscharfmaskierung angewendet werden soll (String).
+    - radius: Der Radius für den Weichzeichnungseffekt oder die Unscharfmaskierung (int oder float).
+    - preview: Gibt an, ob eine Vorschau des bearbeiteten Bildes angezeigt werden soll (Standardwert ist True).
+
+Vergleiche folgende Quellen anhand derer der Code implementiert wurde:
+    Modul Image: https://pillow.readthedocs.io/en/stable/reference/Image.html
+    Modul ImageFilter: https://pillow.readthedocs.io/en/stable/reference/ImageFilter.html
+
+Die Parameter-Validierung wurde mit Unterstützung von ChatGPT implementiert. 
+'''
+
 # Import des Image-Moduls der Bibliothek Pillow
 from PIL import Image
 
 # Import des ImageFilter-Moduls der Bibliothek Pillow
 from PIL import ImageFilter
 
+from modules.fehler_popup import show_error_popup
 
-'''
-Beschreibung der Funktion:
-Diese Funktion ermöglicht das Weichzeichnen oder Schärfen eines Bildes durch Anwendung eines Box- oder Unsharp-Mask-Filters.
-Die Funktion verwendet die Pillow-Bibliothek und die Module Image und ImageFilter für die Bildmanipulation.
-
-Vergleiche folgende Quellen anhand derer der Code implementiert wurde:
-    Modul Image: https://pillow.readthedocs.io/en/stable/reference/Image.html
-    Modul ImageFilter: https://pillow.readthedocs.io/en/stable/reference/ImageFilter.html
-'''
-
-# Die Funktion erhält einen Dateipfad zum Bild sowie den gewünschten Radius.
 def weichzeichnen(image_path, radius, preview=True):
     try:
-        # Parameter-Validierung
+        # Parameter-Validierung (Unterstützung von ChatGPT)
         if not isinstance(image_path, str):
             raise TypeError("Der Dateipfad zum Bild muss eine Zeichenkette (String) sein.")
-        
+            
         if not isinstance(radius, (int, float)):
             raise TypeError("Der Radius muss eine Zahl sein.")
-        
+            
         if not isinstance(preview, bool):
             raise TypeError("Der Vorschau-Parameter muss ein boolscher Wert sein.")
-        
+    
+    
         # Das Bild, mit dessen Dateipfad die Funktion aufgerufen wurde, wird in die Variable "im" gespeichert.
         im = Image.open(image_path)
 
@@ -61,7 +71,10 @@ def weichzeichnen(image_path, radius, preview=True):
         else:
             blured_img.save(image_path)
             return image_path + " weichgezeichnet mit einem Radius von " + str(radius) + " Pixeln."
-         
+        
+    except TypeError as e:
+        show_error_popup(f"Fehler bei der Parameter-Validierung: {e}")
+
     except Exception as e:
         # Fängt allgemeine Ausnahmen ab und gibt eine Fehlermeldung aus.
         print(f"Es ist ein Fehler aufgetreten: {e}")
