@@ -1,3 +1,19 @@
+# Bild mit Farbfiltern anpassen
+
+'''
+Beschreibung der Funktion:
+Mit dieser Funktion können vordefinierte Bildfilter auf ein importiertes Bild angewendet werden.
+Parameter:
+    - name: Der Name des Filters (String).
+    - contrast: Der Kontrastwert des Filters (Standardwert ist 1.0).
+    - brightness: Der Helligkeitswert des Filters (Standardwert ist 1.0).
+    - saturation: Der Sättigungswert des Filters (Standardwert ist 1.0).
+    - color_temperature_change: Die Änderung der Farbtemperatur des Filters in Grad (Standardwert ist 0).
+    - color_thresholds: Ein 4-Tupel, das die Farbschwellen für die Filterung angibt (Standardwert ist (0, 0, 0, 0)).
+
+Die Parameter-Validierung wurde mit Unterstützung von ChatGPT implementiert.
+'''
+
 from PIL import Image, ImageEnhance
 
 # Die Klasse Filter ermöglicht es, vordefinierte Filtereinstellungen zu speichern und auf Bilder anzuwenden, 
@@ -22,7 +38,7 @@ class Filter:
                  color_thresholds: tuple = (0, 0, 0, 0)):
 
         try:
-            # Parameter-Validierung
+            # Parameter-Validierung (Unterstützung von ChatGPT)
             if not isinstance(name, str):
                 raise TypeError("Ungültiger Parameter. 'name' muss ein String sein.")
             if not isinstance(contrast, (int, float)):
