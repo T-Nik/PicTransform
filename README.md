@@ -4,7 +4,7 @@ Bildbearbeitungstool von Gruppe B1-2.  <p>
 Jennifer Beckheuer, Niklas Mickelat, Gille Kevin Noubissi Pouokam, Johanna Schulze, Niklas Trzaska<p>
 
 Das Tool verfügt über die folgenden Funktionen, die auf ein Bild angewendet werden können: 
-   1. Metadaten anpassen
+   1. Metadaten anzeigen
    2. Auflösung anpassen
    3. Drehen
    4. Bildfilter
